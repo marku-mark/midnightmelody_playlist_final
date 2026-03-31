@@ -102,7 +102,7 @@ body {
 
 /* ── Right panel ─────────────────────────────────────── */
 .panel-right {
-  flex: 1;
+  flex: auto;
   min-width: 0;
   background: var(--glass-bg);
   backdrop-filter: blur(24px) saturate(1.5);
