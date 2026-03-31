@@ -102,7 +102,7 @@ body {
 
 /* ── Right panel ─────────────────────────────────────── */
 .panel-right {
-  flex: auto;
+  flex: 1;
   min-width: 0;
   background: var(--glass-bg);
   backdrop-filter: blur(24px) saturate(1.5);
@@ -606,12 +606,20 @@ body {
     padding: 12px 14px;
   }
   .playlist-title { font-size: 18px; }
+  @media (max-width: 680px) {
   .panel-right {
-    border-radius: var(--radius-md);
-    padding: 16px 12px;
-    max-height: 55vh;
-    min-height: 260px;
+    width: 100%;           /* take full width */
+    max-height: none;       /* remove the 55vh limit */
+    min-height: auto;       /* allow it to shrink if needed */
+    flex: 1;                /* take remaining vertical space in column layout */
+    padding: 16px 12px;     /* keep padding */
   }
+
+  /* Optional: make the track list scrollable fully */
+  .track-list-scroll {
+    max-height: calc(100vh - 260px); /* adjust based on header+cover height */
+  }
+}
   .track-thumb { width: 36px; height: 36px; }
   .track-name  { font-size: 13px; }
   .page-footer { padding: 20px 14px 24px; }
