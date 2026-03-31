@@ -22,18 +22,19 @@ var playlist = {
     },
     {
       name:     "Mean It",
-      artist:   "Lauv",
+      artist:   "Lauv, LANY",
       duration: "3:52",
       color:    ["#f4b98e", "#e8834a"],
       audio:    "songs/Mean_It-Lauv_Lany.m4a",
       image:    "previews/Mean_It-Lauv_Lany.jpg"
     },
     {
-      name:     "Bloom",
-      artist:   "The Paper Kites",
-      duration: "3:44",
-      emoji:    "\uD83C\uDF38",
-      color:    ["#e8849e", "#c0607e"]
+      name:     "fuck, i'm lonely (feat. Anne-Marie)",
+      artist:   "Lauv",
+      duration: "3:19",
+      color:    ["#e8849e", "#c0607e"],
+      audio:    "songs/Fuck_Im_Lonely_feat_Anne_marie-Lauv.m4a",
+      image:    "previews/Fuck_Im_Lonely_feat_Anne_marie-Lauv.jpg"
     },
     {
       name:     "Skinny Love",
