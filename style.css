@@ -584,7 +584,8 @@ body {
     padding: 20px 14px 0;
     gap: 16px;
     min-height: unset;
-    max-height: 100%;
+    max-height: none;
+    height: 100%;
   }
   .panel-left {
     width: 100%;
