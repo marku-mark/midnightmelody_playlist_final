@@ -9,7 +9,6 @@ var playlist = {
   creator:     "grace",
   creatorIcon: "user_icon/icon.jpg",
   totalSongs:  20,
-  coverEmoji:  ["\uD83C\uDF3F", "\uD83C\uDF42", "\uD83C\uDF05", "\uD83C\uDF38"],
 
   songs: [
     {
