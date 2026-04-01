@@ -62,11 +62,116 @@ var playlist = {
 
     },
     {
-      name:     "Holocene",
-      artist:   "Bon Iver",
-      duration: "5:37",
-      emoji:    "\u2603\uFE0F",
-      color:    ["#81d4fa", "#0288d1"]
+      name:     "Enemies",
+      artist:   "Lauv",
+      duration: "3:14",
+      color:    ["#81d4fa", "#0288d1"],
+      audio:    "songs/Enemies-Lauv.m4a",
+      image:    "previews/Enemies-Lauv.jpg"
+    },    {
+      name:     "",
+      artist:   "",
+      duration: "",
+      color:    ["#8b9fe8", "#5b6fd4"],
+      audio:    "songs/",
+      image:    "previews/"
+    },
+    {
+      name:     "",
+      artist:   "",
+      duration: "",
+      color:    ["#f4b98e", "#e8834a"],
+      audio:    "songs/",
+      image:    "previews/"
+    },
+    {
+      name:     "",
+      artist:   "",
+      duration: "",
+      color:    ["#e8849e", "#c0607e"],
+      audio:    "songs/",
+      image:    "previews/"
+    },
+    {
+      name:     "",
+      artist:   "",
+      duration: "",
+      color:    ["#2d5a27", "#4a7c59"],
+      audio:    "songs/S",
+      image:    "previews/"
+    },
+    {
+      name:     "",
+      artist:   "",
+      duration: "",
+      color:    ["#e8c87a", "#d4a853"],
+      audio:    "songs/",
+      image:    "previews/"
+    },
+    {
+      name:     "",
+      artist:   "",
+      duration: "",
+      color:    ["#5c6bc0", "#3949ab"],
+      audio:    "songs/",
+      image:    "previews/"
+
+    },
+    {
+      name:     "",
+      artist:   "",
+      duration: "",
+      color:    ["#81d4fa", "#0288d1"],
+      audio:    "songs/",
+      image:    "previews/"
+    },    {
+      name:     "",
+      artist:   "",
+      duration: "",
+      color:    ["#8b9fe8", "#5b6fd4"],
+      audio:    "songs/",
+      image:    "previews/"
+    },
+    {
+      name:     "",
+      artist:   "",
+      duration: "",
+      color:    ["#f4b98e", "#e8834a"],
+      audio:    "songs/",
+      image:    "previews/"
+    },
+    {
+      name:     "",
+      artist:   "",
+      duration: "",
+      color:    ["#e8849e", "#c0607e"],
+      audio:    "songs/",
+      image:    "previews/"
+    },
+    {
+      name:     "",
+      artist:   "",
+      duration: "",
+      color:    ["#2d5a27", "#4a7c59"],
+      audio:    "songs/S",
+      image:    "previews/"
+    },
+    {
+      name:     "",
+      artist:   "",
+      duration: "",
+      color:    ["#e8c87a", "#d4a853"],
+      audio:    "songs/",
+      image:    "previews/"
+    },
+    {
+      name:     "",
+      artist:   "",
+      duration: "",
+      color:    ["#5c6bc0", "#3949ab"],
+      audio:    "songs/",
+      image:    "previews/"
+
     },
   ]
 };
