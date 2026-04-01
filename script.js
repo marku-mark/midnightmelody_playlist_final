@@ -63,7 +63,42 @@ var playlist = {
       duration: "5:37",
       emoji:    "\u2603\uFE0F",
       color:    ["#81d4fa", "#0288d1"]
-    }
+    },
+    {
+      name:     "The Night Will Always Win",
+      artist:   "Manchester Orchestra",
+      duration: "4:02",
+      emoji:    "\uD83C\uDF19",
+      color:    ["#5c6bc0", "#3949ab"]
+    },,
+    {
+      name:     "The Night Will Always Win",
+      artist:   "Manchester Orchestra",
+      duration: "4:02",
+      emoji:    "\uD83C\uDF19",
+      color:    ["#5c6bc0", "#3949ab"]
+    },,
+    {
+      name:     "The Night Will Always Win",
+      artist:   "Manchester Orchestra",
+      duration: "4:02",
+      emoji:    "\uD83C\uDF19",
+      color:    ["#5c6bc0", "#3949ab"]
+    },,
+    {
+      name:     "The Night Will Always Win",
+      artist:   "Manchester Orchestra",
+      duration: "4:02",
+      emoji:    "\uD83C\uDF19",
+      color:    ["#5c6bc0", "#3949ab"]
+    },,
+    {
+      name:     "The Night Will Always Win",
+      artist:   "Manchester Orchestra",
+      duration: "4:02",
+      emoji:    "\uD83C\uDF19",
+      color:    ["#5c6bc0", "#3949ab"]
+    },
   ]
 };
 
