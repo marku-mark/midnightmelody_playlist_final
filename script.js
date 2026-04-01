@@ -328,6 +328,23 @@ function restoreDuration() {
   }
 }
 
+/* ════ PRELOAD NEXT TRACK ════════════════════════════
+   A hidden Audio object quietly fetches the next song
+   in the background so switching feels instant.
+════════════════════════════════════════════════════ */
+var preloadAudio = new Audio();
+
+function preloadNext() {
+  var nextIdx = nextTrackIndex();
+  if (nextIdx === null || nextIdx === currentIndex) return;
+  var nextSong = playlist.songs[nextIdx];
+  if (nextSong && nextSong.audio && preloadAudio.src !== nextSong.audio) {
+    preloadAudio.preload = "auto";
+    preloadAudio.src     = nextSong.audio;
+    preloadAudio.load();
+  }
+}
+
 function setPlaying(playing) {
   isPlaying = playing;
   btnPlay.innerHTML = playing ? "&#10074;&#10074;" : "&#9654;";
@@ -390,10 +407,14 @@ function selectTrack(index) {
     currentIndex = index;
     resetProgress();
     audio.play()
-      .then(function ()  { setPlaying(true); })
+      .then(function () {
+        setPlaying(true);
+        preloadNext();          /* ← quietly load the next track */
+      })
       .catch(function (e) {
         console.warn("Autoplay blocked:", e.message);
         setPlaying(false);
+        preloadNext();          /* ← still preload even if autoplay was blocked */
       });
   } else {
     audio.pause();
