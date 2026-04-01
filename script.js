@@ -37,25 +37,29 @@ var playlist = {
       image:    "previews/Fuck_Im_Lonely_feat_Anne_marie-Lauv.jpg"
     },
     {
-      name:     "Skinny Love",
-      artist:   "Bon Iver",
-      duration: "3:58",
-      emoji:    "\uD83C\uDF32",
-      color:    ["#2d5a27", "#4a7c59"]
+      name:     "Superhero",
+      artist:   "Lauv",
+      duration: "3:00",
+      color:    ["#2d5a27", "#4a7c59"],
+      audio:    "songs/Superhero-Lauv.m4a",
+      image:    "previews/Superhero-Lauv.jpg"
     },
     {
-      name:     "August",
-      artist:   "Taylor Swift",
-      duration: "4:21",
-      emoji:    "\uD83C\uDF3E",
-      color:    ["#e8c87a", "#d4a853"]
+      name:     "Paris in the Rain",
+      artist:   "Lauv",
+      duration: "3:24",
+      color:    ["#e8c87a", "#d4a853"],
+      audio:    "songs/Paris_In_The_Rain-Lauv.m4a",
+      image:    "previews/Paris_In_The_Rain-Lauv.jpg"
     },
     {
-      name:     "The Night Will Always Win",
-      artist:   "Manchester Orchestra",
-      duration: "4:02",
-      emoji:    "\uD83C\uDF19",
-      color:    ["#5c6bc0", "#3949ab"]
+      name:     "Getting Over You",
+      artist:   "Lauv",
+      duration: "4:15",
+      color:    ["#5c6bc0", "#3949ab"],
+      audio:    "songs/Getting_Over_You-Lauv.m4a",
+      image:    "previews/Getting_Over_You-Lauv.jpg"
+
     },
     {
       name:     "Holocene",
@@ -63,41 +67,6 @@ var playlist = {
       duration: "5:37",
       emoji:    "\u2603\uFE0F",
       color:    ["#81d4fa", "#0288d1"]
-    },
-    {
-      name:     "The Night Will Always Win",
-      artist:   "Manchester Orchestra",
-      duration: "4:02",
-      emoji:    "\uD83C\uDF19",
-      color:    ["#5c6bc0", "#3949ab"]
-    },
-    {
-      name:     "The Night Will Always Win",
-      artist:   "Manchester Orchestra",
-      duration: "4:02",
-      emoji:    "\uD83C\uDF19",
-      color:    ["#5c6bc0", "#3949ab"]
-    },
-    {
-      name:     "The Night Will Always Win",
-      artist:   "Manchester Orchestra",
-      duration: "4:02",
-      emoji:    "\uD83C\uDF19",
-      color:    ["#5c6bc0", "#3949ab"]
-    },
-    {
-      name:     "The Night Will Always Win",
-      artist:   "Manchester Orchestra",
-      duration: "4:02",
-      emoji:    "\uD83C\uDF19",
-      color:    ["#5c6bc0", "#3949ab"]
-    },
-    {
-      name:     "The Night Will Always Win",
-      artist:   "Manchester Orchestra",
-      duration: "4:02",
-      emoji:    "\uD83C\uDF19",
-      color:    ["#5c6bc0", "#3949ab"]
     },
   ]
 };
