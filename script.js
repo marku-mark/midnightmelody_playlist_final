@@ -17,7 +17,7 @@ var playlist = {
       artist:   "Lauv",
       duration: "3:24",
       color:    ["#8b9fe8", "#5b6fd4"],
-      audio:    "songs/Love_U_Like_That-Lauv.m4a",
+      audio:    "songs/Love_U_Like_That-Lauv.flac",
       image:    "previews/Love_U_Like_That-Lauv.jpg"
     },
     {
@@ -25,7 +25,7 @@ var playlist = {
       artist:   "Lauv, LANY",
       duration: "3:52",
       color:    ["#f4b98e", "#e8834a"],
-      audio:    "songs/Mean_It-Lauv_Lany.m4a",
+      audio:    "songs/Mean_It-Lauv_Lany.flac",
       image:    "previews/Mean_It-Lauv_Lany.jpg"
     },
     {
@@ -33,7 +33,7 @@ var playlist = {
       artist:   "Lauv",
       duration: "3:19",
       color:    ["#e8849e", "#c0607e"],
-      audio:    "songs/Fuck_Im_Lonely_feat_Anne_marie-Lauv.m4a",
+      audio:    "songs/Fuck_Im_Lonely_feat_Anne_marie-Lauv.flac",
       image:    "previews/Fuck_Im_Lonely_feat_Anne_marie-Lauv.jpg"
     },
     {
@@ -41,7 +41,7 @@ var playlist = {
       artist:   "Lauv",
       duration: "3:00",
       color:    ["#2d5a27", "#4a7c59"],
-      audio:    "songs/Superhero-Lauv.m4a",
+      audio:    "songs/Superhero-Lauv.flac",
       image:    "previews/Superhero-Lauv.jpg"
     },
     {
@@ -49,7 +49,7 @@ var playlist = {
       artist:   "Lauv",
       duration: "3:24",
       color:    ["#e8c87a", "#d4a853"],
-      audio:    "songs/Paris_In_The_Rain-Lauv.m4a",
+      audio:    "songs/Paris_In_The_Rain-Lauv.flac",
       image:    "previews/Paris_In_The_Rain-Lauv.jpg"
     },
     {
@@ -57,7 +57,7 @@ var playlist = {
       artist:   "Lauv",
       duration: "4:15",
       color:    ["#5c6bc0", "#3949ab"],
-      audio:    "songs/Getting_Over_You-Lauv.m4a",
+      audio:    "songs/Getting_Over_You-Lauv.flac",
       image:    "previews/Getting_Over_You-Lauv.jpg"
 
     },
@@ -66,14 +66,14 @@ var playlist = {
       artist:   "Lauv",
       duration: "3:14",
       color:    ["#81d4fa", "#0288d1"],
-      audio:    "songs/Enemies-Lauv.m4a",
+      audio:    "songs/Enemies-Lauv.flac",
       image:    "previews/Enemies-Lauv.jpg"
     },    {
       name:     "beat up car",
       artist:   "Henry Moodie",
       duration: "3:34",
       color:    ["#8b9fe8", "#5b6fd4"],
-      audio:    "songs/Beat_Up_Car-Henry_Moodie.m4a",
+      audio:    "songs/Beat_Up_Car-Henry_Moodie.flac",
       image:    "previews/Beat_Up_Car-Henry_Moodie.jpg"
     },
     {
@@ -81,7 +81,7 @@ var playlist = {
       artist:   "Henry Moodie",
       duration: "2:36",
       color:    ["#f4b98e", "#e8834a"],
-      audio:    "songs/Good_Old_Days-Henry_Moodie.m4a",
+      audio:    "songs/Good_Old_Days-Henry_Moodie.flac",
       image:    "previews/Good_Old_Days-Henry_Moodie.jpg"
     },
     {
@@ -89,7 +89,7 @@ var playlist = {
       artist:   "Johnny Orlando",
       duration: "2:55",
       color:    ["#e8849e", "#c0607e"],
-      audio:    "songs/Leave_The_Light_On-Johnny_Orlando.m4a",
+      audio:    "songs/Leave_The_Light_On-Johnny_Orlando.flac",
       image:    "previews/Leave_The_Light_On-Johnny_Orlando.png"
     },
     {
@@ -97,7 +97,7 @@ var playlist = {
       artist:   "Johnny Orlando",
       duration: "2:51",
       color:    ["#2d5a27", "#4a7c59"],
-      audio:    "songs/Vegas-Johnny_Orlando.m4a",
+      audio:    "songs/Vegas-Johnny_Orlando.flac",
       image:    "previews/Vegas-Johnny_Orlando.jpg"
     },
     {
@@ -105,7 +105,7 @@ var playlist = {
       artist:   "Johnny Orlando",
       duration: "3:10",
       color:    ["#e8c87a", "#d4a853"],
-      audio:    "songs/August-Johnny_Orlando.m4a",
+      audio:    "songs/August-Johnny_Orlando.flac",
       image:    "previews/August-Johnny_Orlando.jpg"
     },
     {
@@ -113,7 +113,7 @@ var playlist = {
       artist:   "Johnny Orlando",
       duration: "2:55",
       color:    ["#5c6bc0", "#3949ab"],
-      audio:    "songs/See_You-Johnny_Orlando.m4a",
+      audio:    "songs/See_You-Johnny_Orlando.flac",
       image:    "previews/See_You-Johnny_Orlando.jpg"
 
     },
@@ -122,14 +122,14 @@ var playlist = {
       artist:   "The Chainsmokers",
       duration: "3:41",
       color:    ["#81d4fa", "#0288d1"],
-      audio:    "songs/Paris-The_Chainsmokers.m4a",
+      audio:    "songs/Paris-The_Chainsmokers.flac",
       image:    "previews/Paris-The_Chainsmokers.jpg"
     },    {
       name:     "Save My Love",
       artist:   "Kygo, Khalid, Gryffin",
       duration: "3:30",
       color:    ["#8b9fe8", "#5b6fd4"],
-      audio:    "songs/Save_My_Love-Kygo_Khalid_Gryffin.m4a",
+      audio:    "songs/Save_My_Love-Kygo_Khalid_Gryffin.flac",
       image:    "previews/Save_My_Love-Kygo_Khalid_Gryffin.jpg"
     },
     {
@@ -137,7 +137,7 @@ var playlist = {
       artist:   "Marshmello",
       duration: "3:00",
       color:    ["#f4b98e", "#e8834a"],
-      audio:    "songs/Silence_feat_Khalid-Marshmello.m4a",
+      audio:    "songs/Silence_feat_Khalid-Marshmello.flac",
       image:    "previews/Silence_feat_Khalid-Marshmello.jpg"
     },
     {
@@ -145,7 +145,7 @@ var playlist = {
       artist:   "Ed Sheeran",
       duration: "3:17",
       color:    ["#e8849e", "#c0607e"],
-      audio:    "songs/Beautiful_People_feat_Khalid-Ed_Sheeran.m4a",
+      audio:    "songs/Beautiful_People_feat_Khalid-Ed_Sheeran.flac",
       image:    "previews/Beautiful_People_feat_Khalid-Ed_Sheeran.jpg"
     },
     {
@@ -153,7 +153,7 @@ var playlist = {
       artist:   "Justin Bieber",
       duration: "4:16",
       color:    ["#2d5a27", "#4a7c59"],
-      audio:    "songs/Favorite_Girl-Justin_Bieber.m4a",
+      audio:    "songs/Favorite_Girl-Justin_Bieber.flac",
       image:    "previews/Favorite_Girl-Justin_Bieber.jpg"
     },
     {
@@ -161,7 +161,7 @@ var playlist = {
       artist:   "Olivia Rodrigo",
       duration: "2:49",
       color:    ["#e8c87a", "#d4a853"],
-      audio:    "songs/So_American-Olivia_Rodrigo.m4a",
+      audio:    "songs/So_American-Olivia_Rodrigo.flac",
       image:    "previews/So_American-Olivia_Rodrigo.jpg"
     },
     {
@@ -169,7 +169,7 @@ var playlist = {
       artist:   "NIKI",
       duration: "2:51",
       color:    ["#5c6bc0", "#3949ab"],
-      audio:    "songs/Lowkey-Niki.m4a",
+      audio:    "songs/Lowkey-Niki.flac",
       image:    "previews/Lowkey-Niki.jpg"
 
     },
