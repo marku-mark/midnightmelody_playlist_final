@@ -69,108 +69,108 @@ var playlist = {
       audio:    "songs/Enemies-Lauv.m4a",
       image:    "previews/Enemies-Lauv.jpg"
     },    {
-      name:     "",
-      artist:   "",
-      duration: "",
+      name:     "beat up car",
+      artist:   "Henry Moodie",
+      duration: "3:34",
       color:    ["#8b9fe8", "#5b6fd4"],
-      audio:    "songs/",
-      image:    "previews/"
+      audio:    "songs/Beat_Up_Car-Henry_Moodie.m4a",
+      image:    "previews/Beat_Up_Car-Henry_Moodie.jpg"
     },
     {
-      name:     "",
-      artist:   "",
-      duration: "",
+      name:     "good old days",
+      artist:   "Henry Moodie",
+      duration: "2:36",
       color:    ["#f4b98e", "#e8834a"],
-      audio:    "songs/",
-      image:    "previews/"
+      audio:    "songs/Good_Old_Days-Henry_Moodie.m4a",
+      image:    "previews/Good_Old_Days-Henry_Moodie.jpg"
     },
     {
-      name:     "",
-      artist:   "",
-      duration: "",
+      name:     "leave the lights on",
+      artist:   "Johnny Orlando",
+      duration: "2:55",
       color:    ["#e8849e", "#c0607e"],
-      audio:    "songs/",
-      image:    "previews/"
+      audio:    "songs/Leave_The_Light_On-Johnny_Orlando.m4a",
+      image:    "previews/Leave_The_Light_On-Johnny_Orlando.png"
     },
     {
-      name:     "",
-      artist:   "",
-      duration: "",
+      name:     "Vegas",
+      artist:   "Johnny Orlando",
+      duration: "2:51",
       color:    ["#2d5a27", "#4a7c59"],
-      audio:    "songs/S",
-      image:    "previews/"
+      audio:    "songs/Vegas-Johnny_Orlando.m4a",
+      image:    "previews/Vegas-Johnny_Orlando.jpg"
     },
     {
-      name:     "",
-      artist:   "",
-      duration: "",
+      name:     "August",
+      artist:   "Johnny Orlando",
+      duration: "3:10",
       color:    ["#e8c87a", "#d4a853"],
-      audio:    "songs/",
-      image:    "previews/"
+      audio:    "songs/August-Johnny_Orlando.m4a",
+      image:    "previews/August-Johnny_Orlando.jpg"
     },
     {
-      name:     "",
-      artist:   "",
-      duration: "",
+      name:     "See You",
+      artist:   "Johnny Orlando",
+      duration: "2:55",
       color:    ["#5c6bc0", "#3949ab"],
-      audio:    "songs/",
-      image:    "previews/"
+      audio:    "songs/See_You-Johnny_Orlando.m4a",
+      image:    "previews/See_You-Johnny_Orlando.jpg"
 
     },
     {
-      name:     "",
-      artist:   "",
-      duration: "",
+      name:     "Paris",
+      artist:   "The Chainsmokers",
+      duration: "3:41",
       color:    ["#81d4fa", "#0288d1"],
-      audio:    "songs/",
-      image:    "previews/"
+      audio:    "songs/Paris-The_Chainsmokers.m4a",
+      image:    "previews/Paris-The_Chainsmokers.jpg"
     },    {
-      name:     "",
-      artist:   "",
-      duration: "",
+      name:     "Save My Love",
+      artist:   "Kygo, Khalid, Gryffin",
+      duration: "3:30",
       color:    ["#8b9fe8", "#5b6fd4"],
-      audio:    "songs/",
-      image:    "previews/"
+      audio:    "songs/Save_My_Love-Kygo_Khalid_Gryffin.m4a",
+      image:    "previews/Save_My_Love-Kygo_Khalid_Gryffin.jpg"
     },
     {
-      name:     "",
-      artist:   "",
-      duration: "",
+      name:     "Silence (feat. Khalid)",
+      artist:   "Marshmello",
+      duration: "3:00",
       color:    ["#f4b98e", "#e8834a"],
-      audio:    "songs/",
-      image:    "previews/"
+      audio:    "songs/Silence_feat_Khalid-Marshmello.m4a",
+      image:    "previews/Silence_feat_Khalid-Marshmello.jpg"
     },
     {
-      name:     "",
-      artist:   "",
-      duration: "",
+      name:     "Beautiful People (feat. Khalid)",
+      artist:   "Ed Sheeran",
+      duration: "3:17",
       color:    ["#e8849e", "#c0607e"],
-      audio:    "songs/",
-      image:    "previews/"
+      audio:    "songs/Beautiful_People_feat_Khalid-Ed_Sheeran.m4a",
+      image:    "previews/Beautiful_People_feat_Khalid-Ed_Sheeran.jpg"
     },
     {
-      name:     "",
-      artist:   "",
-      duration: "",
+      name:     "Favorite Girl",
+      artist:   "Justin Bieber",
+      duration: "4:16",
       color:    ["#2d5a27", "#4a7c59"],
-      audio:    "songs/S",
-      image:    "previews/"
+      audio:    "songs/Favorite_Girl-Justin_Bieber.m4a",
+      image:    "previews/Favorite_Girl-Justin_Bieber.jpg"
     },
     {
-      name:     "",
-      artist:   "",
-      duration: "",
+      name:     "so american",
+      artist:   "Olivia Rodrigo",
+      duration: "2:49",
       color:    ["#e8c87a", "#d4a853"],
-      audio:    "songs/",
-      image:    "previews/"
+      audio:    "songs/So_American-Olivia_Rodrigo.m4a",
+      image:    "previews/So_American-Olivia_Rodrigo.jpg"
     },
     {
-      name:     "",
-      artist:   "",
-      duration: "",
+      name:     "lowkey",
+      artist:   "NIKI",
+      duration: "2:51",
       color:    ["#5c6bc0", "#3949ab"],
-      audio:    "songs/",
-      image:    "previews/"
+      audio:    "songs/Lowkey-Niki.m4a",
+      image:    "previews/Lowkey-Niki.jpg"
 
     },
   ]
@@ -286,8 +286,7 @@ function renderTrackList() {
 /* ════ SECTION 5 — FOOTER ════════════════════════════ */
 function renderFooter() {
   document.getElementById("totalInfo").innerHTML =
-    "Showing <strong>" + playlist.songs.length +
-    " of " + playlist.totalSongs + "</strong> songs";
+    "<strong>"  + playlist.totalSongs + "</strong> songs, 1 hour 6 minutes";
 }
 
 /* ════ SECTION 6 — AUDIO PLAYER ═════════════════════ */
