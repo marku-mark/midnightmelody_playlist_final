@@ -228,19 +228,6 @@ function formatTime(s) {
   return m + ":" + (sec < 10 ? "0" : "") + sec;
 }
 
-function fetchAudioDuration(src, callback) {
-  if (durationCache[src]) { callback(durationCache[src]); return; }
-  var tmp = new Audio();
-  tmp.preload = "metadata";
-  tmp.addEventListener("loadedmetadata", function () {
-    var dur = formatTime(tmp.duration);
-    if (dur) { durationCache[src] = dur; callback(dur); }
-    tmp.src = "";
-  });
-  tmp.addEventListener("error", function () { tmp.src = ""; });
-  tmp.src = src;
-}
-
 function renderTrackList() {
   var list = document.getElementById("trackList");
 
@@ -273,13 +260,6 @@ function renderTrackList() {
     row.addEventListener("click", function () { selectTrack(i); });
     list.appendChild(row);
 
-    if (song.audio) {
-      fetchAudioDuration(song.audio, function (realDur) {
-        var el = document.getElementById("dur-" + i);
-        if (el) el.textContent = realDur;
-        song.duration = realDur;
-      });
-    }
   });
 }
 
