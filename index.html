@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Forest Dusk Sessions - Playlist</title>
-  <link rel="icon" href="favicon/lucky_clover.png">
+  <link rel="icon" href="favicon/totoro_icon.png">
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@300;500;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
@@ -28,16 +28,18 @@
         <!-- Cover photo (full bleed) -->
         <div class="cover-grid" id="coverGrid">
           <img class="cover-photo" src="playlist_cover/cover.jpg" alt="Forest Dusk" id="coverPhoto" />
-
         </div>
 
-        <!-- Badge, title, creator -->
+        <!-- Badge, title, creator, description -->
         <div class="playlist-header">
           <div class="badge"><span class="badge-dot"></span> Playlist</div>
           <div class="playlist-title" id="playlistTitle"></div>
           <div class="playlist-meta">
             <span class="creator-avatar">&#x1F33F;</span>
             <span id="playlistMeta"></span>
+          </div>
+          <div class="playlist-description" id="playlistDescription">
+            <p id="descriptionText"></p>
           </div>
         </div>
 
@@ -47,7 +49,6 @@
       <div class="transport-bar">
         <div class="transport-btn-wrap">
           <button class="btn-transport" id="btnTransportBack" aria-label="Previous" title="Previous track">
-            <!-- skip-back icon -->
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <line x1="5" y1="5" x2="5" y2="19"></line>
               <polygon points="19 4 9 12 19 20 19 4"></polygon>
@@ -58,7 +59,6 @@
 
         <div class="transport-btn-wrap">
           <button class="btn-transport" id="btnShuffle" aria-label="Shuffle" title="Shuffle">
-            <!-- shuffle icon -->
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <polyline points="16 3 21 3 21 8"></polyline>
               <line x1="4" y1="20" x2="21" y2="3"></line>
@@ -76,7 +76,6 @@
 
         <div class="transport-btn-wrap">
           <button class="btn-transport" id="btnRepeat" aria-label="Repeat" title="Repeat">
-            <!-- repeat icon -->
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <polyline points="17 1 21 5 17 9"></polyline>
               <path d="M3 11V9a4 4 0 0 1 4-4h14"></path>
@@ -89,7 +88,6 @@
 
         <div class="transport-btn-wrap">
           <button class="btn-transport" id="btnTransportNext" aria-label="Next" title="Next track">
-            <!-- skip-forward icon -->
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <polygon points="5 4 15 12 5 20 5 4"></polygon>
               <line x1="19" y1="5" x2="19" y2="19"></line>
@@ -122,6 +120,41 @@
     <!-- ══ RIGHT / BOTTOM PANEL: full track list ═════ -->
     <main class="panel-right">
 
+      <!-- ══ SEARCH + SORT TOOLBAR ═══════════════════ -->
+      <div class="toolbar">
+        <div class="search-wrap">
+          <svg class="search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input
+            type="text"
+            class="search-input"
+            id="searchInput"
+            placeholder="Search songs or artists…"
+            autocomplete="off"
+            spellcheck="false"
+          />
+          <button class="search-clear" id="searchClear" aria-label="Clear search" title="Clear">✕</button>
+        </div>
+
+        <div class="sort-wrap">
+          <span class="sort-label">Sort</span>
+          <button class="sort-btn" id="sortTitle" data-sort="title" title="Sort by title">
+            Title
+            <svg class="sort-arrow" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="18 15 12 9 6 15"></polyline>
+            </svg>
+          </button>
+          <button class="sort-btn" id="sortArtist" data-sort="artist" title="Sort by artist">
+            Artist
+            <svg class="sort-arrow" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="18 15 12 9 6 15"></polyline>
+            </svg>
+          </button>
+        </div>
+      </div>
+
       <!-- Column labels -->
       <div class="tracks-header">
         <span class="col-num">#</span>
@@ -136,6 +169,12 @@
         <!-- Track rows built by JS -->
         <div class="track-list" id="trackList"></div>
 
+        <!-- Empty state -->
+        <div class="empty-state" id="emptyState">
+          <span>🎵</span>
+          <p>No songs match your search</p>
+        </div>
+
         <!-- "Showing X of Y songs" -->
         <div class="total-info" id="totalInfo"></div>
       </div>
@@ -143,6 +182,28 @@
     </main>
 
   </div><!-- /page -->
+
+  <!-- ══ RELATED PLAYLISTS SLIDER ════════════════════ -->
+  <section class="related-section" id="relatedSection">
+    <div class="related-header">
+      <h2 class="related-title">More Playlists</h2>
+      <div class="slider-arrows">
+        <button class="slider-arrow" id="sliderPrev" aria-label="Scroll left">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+        <button class="slider-arrow" id="sliderNext" aria-label="Scroll right">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+      </div>
+    </div>
+    <div class="slider-track-wrap">
+      <div class="slider-track" id="sliderTrack"></div>
+    </div>
+  </section>
 
   <!-- ══ PAGE FOOTER — Share button + branding ═════ -->
   <footer class="page-footer">

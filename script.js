@@ -8,7 +8,7 @@ var playlist = {
   title:       "Forest Dusk Sessions",
   creator:     "grace",
   creatorIcon: "user_icon/icon.jpg",
-  totalSongs:  20,
+  description: "soft songs for golden hour drives, tangled earphones, and the feeling of almost saying something.",
 
   songs: [
     {
@@ -58,7 +58,6 @@ var playlist = {
       color:    ["#5c6bc0", "#3949ab"],
       audio:    "songs/Getting_Over_You-Lauv.m4a",
       image:    "previews/Getting_Over_You-Lauv.jpg"
-
     },
     {
       name:     "Enemies",
@@ -67,7 +66,8 @@ var playlist = {
       color:    ["#81d4fa", "#0288d1"],
       audio:    "songs/Enemies-Lauv.m4a",
       image:    "previews/Enemies-Lauv.jpg"
-    },    {
+    },
+    {
       name:     "beat up car",
       artist:   "Henry Moodie",
       duration: "3:34",
@@ -114,7 +114,6 @@ var playlist = {
       color:    ["#5c6bc0", "#3949ab"],
       audio:    "songs/See_You-Johnny_Orlando.m4a",
       image:    "previews/See_You-Johnny_Orlando.jpg"
-
     },
     {
       name:     "Paris",
@@ -123,7 +122,8 @@ var playlist = {
       color:    ["#81d4fa", "#0288d1"],
       audio:    "songs/Paris-The_Chainsmokers.m4a",
       image:    "previews/Paris-The_Chainsmokers.jpg"
-    },    {
+    },
+    {
       name:     "Save My Love",
       artist:   "Kygo, Khalid, Gryffin",
       duration: "3:30",
@@ -170,7 +170,6 @@ var playlist = {
       color:    ["#5c6bc0", "#3949ab"],
       audio:    "songs/Lowkey-Niki.m4a",
       image:    "previews/Lowkey-Niki.jpg"
-
     },
   ]
 };
@@ -212,33 +211,137 @@ function renderHeader() {
       '<img src="' + playlist.creatorIcon + '" alt="' + playlist.creator + '" />';
   }
 
-  document.getElementById("playlistMeta").innerHTML =
-    '<span class="creator-name">' + playlist.creator + "</span>" +
-    " \u00B7 " + playlist.totalSongs + " songs";
+  /* description */
+  var descEl = document.getElementById("descriptionText");
+  if (descEl && playlist.description) {
+    descEl.textContent = playlist.description;
+  }
+
+  updateHeaderMeta();
 }
 
-/* ════ SECTION 4 — TRACK LIST ════════════════════════ */
-var durationCache = {};
+/* Update just the song count in the header meta (keeps creator name stable) */
+function updateHeaderMeta() {
+  var metaEl = document.getElementById("playlistMeta");
+  if (!metaEl) return;
+  metaEl.innerHTML =
+    '<span class="creator-name">' + playlist.creator + "</span>" +
+    " \u00B7 " + playlist.songs.length + " songs";
+}
 
-function formatTime(s) {
-  if (isNaN(s) || s === Infinity || s <= 0) return null;
-  var m   = Math.floor(s / 60);
-  var sec = Math.floor(s % 60);
-  return m + ":" + (sec < 10 ? "0" : "") + sec;
+/* ════ SECTION 4 — DURATION HELPERS ════════════════════ */
+
+/* Parse "M:SS" or "H:MM:SS" string → total seconds */
+function parseDuration(str) {
+  if (!str) return 0;
+  var parts = str.split(":").map(Number);
+  if (parts.length === 2) return parts[0] * 60 + parts[1];
+  if (parts.length === 3) return parts[0] * 3600 + parts[1] * 60 + parts[2];
+  return 0;
+}
+
+/* Format total seconds → "H:MM:SS" or "M:SS" */
+function formatTotalDuration(totalSec) {
+  totalSec = Math.floor(totalSec);
+  var h = Math.floor(totalSec / 3600);
+  var m = Math.floor((totalSec % 3600) / 60);
+  var s = totalSec % 60;
+  if (h > 0) {
+    return h + ":" + (m < 10 ? "0" : "") + m + ":" + (s < 10 ? "0" : "") + s;
+  }
+  return m + ":" + (s < 10 ? "0" : "") + s;
+}
+
+/* Human-readable short form e.g. "1 hr 6 min" */
+function formatDurationHuman(totalSec) {
+  totalSec = Math.floor(totalSec);
+  var h = Math.floor(totalSec / 3600);
+  var m = Math.floor((totalSec % 3600) / 60);
+  var s = totalSec % 60;
+  var parts = [];
+  if (h > 0) parts.push(h + " hr");
+  if (m > 0) parts.push(m + " min");
+  if (parts.length === 0) parts.push(s + " sec");
+  return parts.join(" ");
+}
+
+/* Compute total seconds for an array of song objects */
+function computeTotalSeconds(songs) {
+  return songs.reduce(function (acc, s) { return acc + parseDuration(s.duration); }, 0);
+}
+
+/* ════ SECTION 5 — STATE: search + sort ═════════════════ */
+var searchQuery  = "";
+var sortKey      = null;   /* null | "title" | "artist" */
+var sortDir      = "asc";  /* "asc" | "desc" */
+
+/* Returns a filtered + sorted view of playlist.songs (never mutates the original) */
+function getVisibleSongs() {
+  var q = searchQuery.trim().toLowerCase();
+
+  var result = playlist.songs.filter(function (s) {
+    if (!q) return true;
+    return s.name.toLowerCase().indexOf(q) !== -1 ||
+           s.artist.toLowerCase().indexOf(q) !== -1;
+  });
+
+  if (sortKey) {
+    var key = sortKey;
+    var dir = sortDir === "asc" ? 1 : -1;
+    result = result.slice().sort(function (a, b) {
+      var va = (key === "title" ? a.name : a.artist).toLowerCase();
+      var vb = (key === "title" ? b.name : b.artist).toLowerCase();
+      return va < vb ? -dir : va > vb ? dir : 0;
+    });
+  }
+
+  return result;
+}
+
+/* ════ SECTION 6 — TRACK LIST RENDERER ════════════════ */
+
+/* Wrap matching text in <mark> for search highlight */
+function highlight(text, query) {
+  if (!query) return escHtml(text);
+  var q   = query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  var re  = new RegExp("(" + q + ")", "gi");
+  return escHtml(text).replace(re, "<mark>$1</mark>");
+}
+
+function escHtml(str) {
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
 }
 
 function renderTrackList() {
-  var list = document.getElementById("trackList");
+  var list       = document.getElementById("trackList");
+  var emptyState = document.getElementById("emptyState");
+  var visible    = getVisibleSongs();
+  var q          = searchQuery.trim().toLowerCase();
 
-  playlist.songs.forEach(function (song, i) {
+  list.innerHTML = "";
+
+  if (visible.length === 0) {
+    emptyState.classList.add("visible");
+  } else {
+    emptyState.classList.remove("visible");
+  }
+
+  visible.forEach(function (song, i) {
     var row = document.createElement("div");
     row.className = "track-row";
-    row.style.animationDelay = (0.1 + i * 0.055) + "s";
-    row.dataset.index = i;
+    row.style.animationDelay = (0.05 + i * 0.04) + "s";
+
+    /* Store the real index into playlist.songs so playback works correctly */
+    var realIndex = playlist.songs.indexOf(song);
+    row.dataset.realIndex = realIndex;
 
     var thumbInner = song.image
-      ? '<img src="' + song.image + '" alt="' + song.name + '" />'
-      : "<span>" + song.emoji + "</span>";
+      ? '<img src="' + escHtml(song.image) + '" alt="' + escHtml(song.name) + '" />'
+      : "<span>" + (song.emoji || "") + "</span>";
 
     var thumbStyle = song.image
       ? ""
@@ -246,29 +349,106 @@ function renderTrackList() {
 
     row.innerHTML =
       '<div class="track-num-wrap">' +
-        '<span class="track-num">'  + (i + 1)    + "</span>" +
-        '<span class="play-icon">&#9654;</span>'             +
+        '<span class="track-num">'  + (i + 1) + "</span>" +
+        '<span class="play-icon">&#9654;</span>' +
       "</div>" +
       '<div class="track-thumb" style="' + thumbStyle + '">' + thumbInner + "</div>" +
       '<div class="track-info">' +
-        '<div class="track-name">'   + song.name   + "</div>" +
-        '<div class="track-artist">' + song.artist + "</div>" +
+        '<div class="track-name">'   + highlight(song.name,   q) + "</div>" +
+        '<div class="track-artist">' + highlight(song.artist, q) + "</div>" +
       "</div>" +
-      '<div class="track-duration" id="dur-' + i + '">' + (song.duration || "\u2014") + "</div>";
+      '<div class="track-duration" id="dur-' + realIndex + '">' + (song.duration || "\u2014") + "</div>";
 
-    row.addEventListener("click", function () { selectTrack(i); });
+    /* Clicking a filtered/sorted row plays by real playlist index */
+    row.addEventListener("click", (function (idx) {
+      return function () { selectTrack(idx); };
+    })(realIndex));
+
     list.appendChild(row);
-
   });
+
+  renderFooter(visible);
 }
 
-/* ════ SECTION 5 — FOOTER ════════════════════════════ */
-function renderFooter() {
-  document.getElementById("totalInfo").innerHTML =
-    "<strong>"  + playlist.totalSongs + "</strong> songs, 1 hour 6 minutes";
+/* ════ SECTION 7 — FOOTER / STATS ══════════════════════ */
+function renderFooter(visibleSongs) {
+  var totalInfo = document.getElementById("totalInfo");
+  if (!totalInfo) return;
+
+  var all      = playlist.songs;
+  var shown    = visibleSongs || getVisibleSongs();
+  var isFiltered = shown.length !== all.length;
+  var totalSec = computeTotalSeconds(shown);
+  var durHuman = formatDurationHuman(totalSec);
+
+  var countHtml;
+  if (isFiltered) {
+    countHtml =
+      '<span class="stat-count">' + shown.length + '</span> of ' +
+      '<span class="stat-count">' + all.length + '</span> songs' +
+      '<span class="stat-filter">filtered</span>';
+  } else {
+    countHtml = '<span class="stat-count">' + all.length + '</span> songs';
+  }
+
+  totalInfo.innerHTML =
+    countHtml +
+    '<span class="stat-dot">&bull;</span>' +
+    '<span class="stat-dur">' + durHuman + '</span>';
 }
 
-/* ════ SECTION 6 — AUDIO PLAYER ═════════════════════ */
+/* ════ SECTION 8 — SEARCH LOGIC ════════════════════════ */
+(function () {
+  var input     = document.getElementById("searchInput");
+  var clearBtn  = document.getElementById("searchClear");
+  if (!input) return;
+
+  input.addEventListener("input", function () {
+    searchQuery = input.value;
+    clearBtn.classList.toggle("visible", searchQuery.length > 0);
+    renderTrackList();
+  });
+
+  clearBtn.addEventListener("click", function () {
+    input.value = "";
+    searchQuery = "";
+    clearBtn.classList.remove("visible");
+    input.focus();
+    renderTrackList();
+  });
+})();
+
+/* ════ SECTION 9 — SORT LOGIC ══════════════════════════ */
+(function () {
+  var btns = document.querySelectorAll(".sort-btn");
+
+  btns.forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var key = btn.dataset.sort; /* "title" or "artist" */
+
+      if (sortKey === key) {
+        /* Same key → toggle direction */
+        sortDir = sortDir === "asc" ? "desc" : "asc";
+        btn.classList.toggle("desc", sortDir === "desc");
+      } else {
+        /* New key → reset other buttons, set asc */
+        btns.forEach(function (b) { b.classList.remove("active", "desc"); });
+        sortKey = key;
+        sortDir = "asc";
+        btn.classList.add("active");
+        btn.classList.remove("desc");
+      }
+
+      renderTrackList();
+      showToast(
+        (key === "title" ? "\uD83D\uDD24 Title" : "\uD83C\uDFA4 Artist") +
+        " — " + (sortDir === "asc" ? "A → Z" : "Z → A")
+      );
+    });
+  });
+})();
+
+/* ════ SECTION 10 — AUDIO PLAYER ═════════════════════ */
 var audio        = document.getElementById("audioEngine");
 var playerBar    = document.getElementById("playerBar");
 var playerDisc   = document.getElementById("playerDisc");
@@ -291,7 +471,7 @@ var shuffleOrder = [];
 function buildShuffleOrder() {
   shuffleOrder = playlist.songs.map(function (_, i) { return i; });
   for (var i = shuffleOrder.length - 1; i > 0; i--) {
-    var j = Math.floor(Math.random() * (i + 1));
+    var j   = Math.floor(Math.random() * (i + 1));
     var tmp = shuffleOrder[i]; shuffleOrder[i] = shuffleOrder[j]; shuffleOrder[j] = tmp;
   }
 }
@@ -319,7 +499,6 @@ function resetProgress() {
 }
 
 function restoreDuration() {
-  /* Re-populate timeDuration after resetProgress if audio is still loaded */
   if (audio.duration && !isNaN(audio.duration) && audio.duration !== Infinity) {
     timeDuration.textContent = fmt(audio.duration);
   } else if (currentIndex !== null && playlist.songs[currentIndex].duration) {
@@ -345,24 +524,27 @@ function setPlaying(playing) {
 function selectTrack(index) {
   var song = playlist.songs[index];
 
+  /* Remove is-playing from all rows, then re-apply to the correct one */
   document.querySelectorAll(".track-row").forEach(function (r) {
     r.classList.remove("is-playing");
   });
 
-  var activeRow = document.querySelectorAll(".track-row")[index];
-  activeRow.classList.add("is-playing");
+  /* Find the visible row that maps to this real index */
+  var activeRow = document.querySelector(".track-row[data-real-index='" + index + "']");
+  if (activeRow) {
+    activeRow.classList.add("is-playing");
 
-  /* Scroll active track into view */
-  var scroller = document.getElementById("trackListScroll");
-  if (scroller) {
-    var rowTop    = activeRow.offsetTop;
-    var rowHeight = activeRow.offsetHeight;
-    var scrollTop = scroller.scrollTop;
-    var visible   = scroller.clientHeight;
-    if (rowTop < scrollTop) {
-      scroller.scrollTo({ top: rowTop - 8, behavior: "smooth" });
-    } else if (rowTop + rowHeight > scrollTop + visible) {
-      scroller.scrollTo({ top: rowTop + rowHeight - visible + 8, behavior: "smooth" });
+    var scroller = document.getElementById("trackListScroll");
+    if (scroller) {
+      var rowTop    = activeRow.offsetTop;
+      var rowHeight = activeRow.offsetHeight;
+      var scrollTop = scroller.scrollTop;
+      var visible   = scroller.clientHeight;
+      if (rowTop < scrollTop) {
+        scroller.scrollTo({ top: rowTop - 8, behavior: "smooth" });
+      } else if (rowTop + rowHeight > scrollTop + visible) {
+        scroller.scrollTo({ top: rowTop + rowHeight - visible + 8, behavior: "smooth" });
+      }
     }
   }
 
@@ -372,7 +554,7 @@ function selectTrack(index) {
     "linear-gradient(135deg," + song.color[0] + "," + song.color[1] + ")";
 
   if (song.image) {
-    playerArt.src          = song.image;
+    playerArt.src             = song.image;
     playerArt.style.display   = "block";
     playerEmoji.style.display = "none";
   } else {
@@ -430,7 +612,7 @@ audio.addEventListener("loadedmetadata", function () {
   timeDuration.textContent = fmt(audio.duration);
   if (currentIndex !== null) {
     var el  = document.getElementById("dur-" + currentIndex);
-    var dur = formatTime(audio.duration);
+    var dur = formatTotalDuration(audio.duration);
     if (el && dur) el.textContent = dur;
   }
 });
@@ -441,7 +623,6 @@ audio.addEventListener("ended", function () {
   resetProgress();
 
   if (repeatMode === "one") {
-    /* Restore duration immediately since src/metadata hasn't changed */
     restoreDuration();
     audio.currentTime = 0;
     audio.play()
@@ -462,7 +643,7 @@ progressBar.addEventListener("input", function () {
   audio.currentTime = (progressBar.value / 100) * audio.duration;
 });
 
-/* ════ SECTION 7 — TRANSPORT CONTROLS ═══════════════ */
+/* ════ SECTION 11 — TRANSPORT CONTROLS ═══════════════ */
 function goToNextTrack() {
   if (currentIndex === null) { selectTrack(0); return; }
   selectTrack(nextTrackIndex());
@@ -517,7 +698,7 @@ document.getElementById("btnRepeat").addEventListener("click", function () {
   showToast(labels[repeatPos]);
 });
 
-/* ════ SECTION 8 — SHARE BUTTON ═════════════════════ */
+/* ════ SECTION 12 — SHARE BUTTON ═════════════════════ */
 function initShareButton() {
   document.getElementById("shareBtn").addEventListener("click", function () {
     var data = {
@@ -544,10 +725,9 @@ function showToast(msg) {
   setTimeout(function () { t.classList.remove("show"); }, 2800);
 }
 
-/* ════ SECTION 9 — INIT ══════════════════════════════ */
+/* ════ SECTION 13 — INIT ══════════════════════════════ */
 renderHeader();
 renderTrackList();
-renderFooter();
 initShareButton();
 buildShuffleOrder();
 
@@ -561,4 +741,187 @@ buildShuffleOrder();
   }
   scroller.addEventListener("scroll", checkBottom, { passive: true });
   setTimeout(checkBottom, 100);
+})();
+
+/* ════ SECTION 14 — RELATED PLAYLISTS SLIDER ═════════ */
+
+/* ── Edit this array to add / remove related playlists ─ */
+var relatedPlaylists = [
+  {
+    title: "Midnight Drives",
+    cover: "playlist_covers/midnight_drives.jpg",
+    href:  "midnight-drives.html"
+  },
+  {
+    title: "Golden Hour",
+    cover: "playlist_covers/golden_hour.jpg",
+    href:  "golden-hour.html"
+  },
+  {
+    title: "Rainy Cafe Vibes",
+    cover: "playlist_covers/rainy_cafe.jpg",
+    href:  "rainy-cafe.html"
+  },
+  {
+    title: "Late Night Feels",
+    cover: "playlist_covers/late_night.jpg",
+    href:  "late-night.html"
+  },
+  {
+    title: "Sunday Morning",
+    cover: "playlist_covers/sunday_morning.jpg",
+    href:  "sunday-morning.html"
+  },
+  {
+    title: "Study With Me",
+    cover: "playlist_covers/study_with_me.jpg",
+    href:  "study-with-me.html"
+  },
+  {
+    title: "Soft Indie",
+    cover: "playlist_covers/soft_indie.jpg",
+    href:  "soft-indie.html"
+  }
+];
+
+(function () {
+  var track     = document.getElementById("sliderTrack");
+  var prevBtn   = document.getElementById("sliderPrev");
+  var nextBtn   = document.getElementById("sliderNext");
+  if (!track || !prevBtn || !nextBtn) return;
+
+  /* ── Build cards dynamically ─────────────────────── */
+  relatedPlaylists.forEach(function (pl, i) {
+    var card = document.createElement("div");
+    card.className = "playlist-card";
+    card.style.animationDelay = (0.05 + i * 0.06) + "s";
+
+    /* Cover link */
+    var coverLink = document.createElement("a");
+    coverLink.href      = pl.href;
+    coverLink.className = "playlist-card-link";
+    coverLink.setAttribute("aria-label", pl.title);
+
+    if (pl.cover) {
+      var img = document.createElement("img");
+      img.src   = pl.cover;
+      img.alt   = pl.title;
+      img.onerror = function () {
+        /* Fallback: show emoji if image missing */
+        coverLink.classList.add("no-image");
+        coverLink.innerHTML = "🎵";
+      };
+      coverLink.appendChild(img);
+    } else {
+      coverLink.classList.add("no-image");
+      coverLink.textContent = "🎵";
+    }
+
+    /* Title link */
+    var titleLink = document.createElement("a");
+    titleLink.href      = pl.href;
+    titleLink.className = "playlist-card-title-link";
+    titleLink.textContent = pl.title;
+
+    card.appendChild(coverLink);
+    card.appendChild(titleLink);
+    track.appendChild(card);
+  });
+
+  /* ── Slider state ────────────────────────────────── */
+  var currentOffset = 0;
+
+  function getCardWidth() {
+    var first = track.querySelector(".playlist-card");
+    if (!first) return 162;
+    var style = getComputedStyle(track);
+    var gap   = parseFloat(style.gap) || 14;
+    return first.offsetWidth + gap;
+  }
+
+  function getMaxOffset() {
+    var wrapWidth  = track.parentElement.offsetWidth;
+    var totalWidth = track.scrollWidth;
+    return Math.max(0, totalWidth - wrapWidth);
+  }
+
+  function slideTo(offset) {
+    var max     = getMaxOffset();
+    currentOffset = Math.max(0, Math.min(offset, max));
+    track.style.transform = "translateX(-" + currentOffset + "px)";
+    prevBtn.disabled = currentOffset <= 0;
+    nextBtn.disabled = currentOffset >= max;
+  }
+
+  /* Init */
+  slideTo(0);
+
+  nextBtn.addEventListener("click", function () {
+    slideTo(currentOffset + getCardWidth() * 2);
+  });
+  prevBtn.addEventListener("click", function () {
+    slideTo(currentOffset - getCardWidth() * 2);
+  });
+
+  /* ── Mouse wheel horizontal scroll ──────────────── */
+  track.parentElement.addEventListener("wheel", function (e) {
+    if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return; /* native horizontal */
+    e.preventDefault();
+    slideTo(currentOffset + e.deltaY * 0.8);
+  }, { passive: false });
+
+  /* ── Touch / drag support ────────────────────────── */
+  var dragStart    = null;
+  var dragStartOff = 0;
+
+  function onPointerDown(e) {
+    dragStart    = e.type === "touchstart" ? e.touches[0].clientX : e.clientX;
+    dragStartOff = currentOffset;
+    track.classList.add("is-dragging");
+    /* Prevent link navigation during drag */
+    track.querySelectorAll("a").forEach(function (a) {
+      a.setAttribute("data-drag-lock", "1");
+    });
+  }
+
+  function onPointerMove(e) {
+    if (dragStart === null) return;
+    var x    = e.type === "touchmove" ? e.touches[0].clientX : e.clientX;
+    var diff = dragStart - x;
+    slideTo(dragStartOff + diff);
+  }
+
+  function onPointerUp(e) {
+    if (dragStart === null) return;
+    var x    = e.type === "touchend" ? e.changedTouches[0].clientX : e.clientX;
+    var moved = Math.abs(dragStart - x);
+    dragStart = null;
+    track.classList.remove("is-dragging");
+    /* Re-enable links only if barely moved */
+    setTimeout(function () {
+      track.querySelectorAll("a[data-drag-lock]").forEach(function (a) {
+        a.removeAttribute("data-drag-lock");
+      });
+    }, 10);
+    /* Block click-through if drag distance > 6px */
+    if (moved > 6) {
+      track.addEventListener("click", function blockClick(ev) {
+        ev.preventDefault();
+        track.removeEventListener("click", blockClick);
+      }, { once: true, capture: true });
+    }
+  }
+
+  track.addEventListener("mousedown",  onPointerDown);
+  track.addEventListener("mousemove",  onPointerMove);
+  track.addEventListener("mouseup",    onPointerUp);
+  track.addEventListener("mouseleave", onPointerUp);
+  track.addEventListener("touchstart", onPointerDown, { passive: true });
+  track.addEventListener("touchmove",  onPointerMove, { passive: true });
+  track.addEventListener("touchend",   onPointerUp);
+
+  /* Re-clamp on resize */
+  window.addEventListener("resize", function () {
+    slideTo(currentOffset);
+  }, { passive: true });
 })();
