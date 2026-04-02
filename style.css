@@ -1,6 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Cedarville+Cursive&display=swap');
-
-
 /* ════════════════════════════════════════════════════════
    style.css — Playlist Card  (Desktop + Mobile responsive)
 ════════════════════════════════════════════════════════ */
@@ -140,7 +137,7 @@ body {
   position: relative;
 }
 
-/* Full-bleed cover photo spanning all 4 cells */
+/* ── Full-bleed cover photo spanning the grid */
 .cover-photo {
   position: absolute;
   inset: 0;
@@ -158,19 +155,6 @@ body {
   z-index: 1;
   pointer-events: none;
 }
-
-.cover-cell {
-  display: flex; align-items: center; justify-content: center;
-  font-size: 32px;
-  position: relative; overflow: hidden;
-  z-index: 2;
-}
-/* Hide individual cell backgrounds since we have the photo */
-.cover-cell:nth-child(1),
-.cover-cell:nth-child(2),
-.cover-cell:nth-child(3),
-.cover-cell:nth-child(4) { background: transparent; }
-.cover-cell span { display: none; } /* hide emojis when photo is present */
 
 /* ════════════════════════════════════════════════════════
    PLAYLIST DESCRIPTION — nested inside .playlist-header

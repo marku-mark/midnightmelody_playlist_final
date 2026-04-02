@@ -8,7 +8,7 @@ var playlist = {
   title:       "Forest Dusk Sessions",
   creator:     "grace",
   creatorIcon: "user_icon/icon.jpg",
-  description: "soft songs for golden hour drives, tangled earphones, and the feeling of almost saying something.",
+  description: "twilight nostalgia",
 
   songs: [
     {
@@ -752,36 +752,7 @@ var relatedPlaylists = [
     cover: "playlist_covers/midnight_drives.jpg",
     href:  "midnight-drives.html"
   },
-  {
-    title: "Golden Hour",
-    cover: "playlist_covers/golden_hour.jpg",
-    href:  "golden-hour.html"
-  },
-  {
-    title: "Rainy Cafe Vibes",
-    cover: "playlist_covers/rainy_cafe.jpg",
-    href:  "rainy-cafe.html"
-  },
-  {
-    title: "Late Night Feels",
-    cover: "playlist_covers/late_night.jpg",
-    href:  "late-night.html"
-  },
-  {
-    title: "Sunday Morning",
-    cover: "playlist_covers/sunday_morning.jpg",
-    href:  "sunday-morning.html"
-  },
-  {
-    title: "Study With Me",
-    cover: "playlist_covers/study_with_me.jpg",
-    href:  "study-with-me.html"
-  },
-  {
-    title: "Soft Indie",
-    cover: "playlist_covers/soft_indie.jpg",
-    href:  "soft-indie.html"
-  }
+
 ];
 
 (function () {
