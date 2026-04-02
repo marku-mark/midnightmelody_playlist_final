@@ -14,7 +14,7 @@ var playlist = {
     {
       name:     "Love U Like That",
       artist:   "Lauv",
-      duration: "3:24",
+      duration: "3:31",
       color:    ["#8b9fe8", "#5b6fd4"],
       audio:    "songs/Love_U_Like_That-Lauv.m4a",
       image:    "previews/Love_U_Like_That-Lauv.jpg"
