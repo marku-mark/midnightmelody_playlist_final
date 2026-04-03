@@ -785,7 +785,7 @@ loadAllDurations();
 var relatedPlaylists = [
   {
     title: "Midnight Drives",
-    cover: "playlist_covers/midnight_drives.jpg",
+    cover: "other_playlist_covers/on_repeat.jpg",
     href:  "midnight-drives.html"
   },
 

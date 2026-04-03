@@ -723,10 +723,7 @@ body {
 }
 
 .footer-divider {
-  width: 100%;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
-  margin-bottom: 4px;
+  display: none;
 }
 
 .footer-brand {
@@ -932,9 +929,9 @@ body {
   overflow: hidden;
   position: relative;
   aspect-ratio: 1;
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
-  box-shadow: 0 4px 18px rgba(20,35,20,0.35);
+  background: transparent;
+  border: none;
+  box-shadow: none;
   transition: transform 0.22s cubic-bezier(0.22,1,0.36,1), box-shadow 0.22s, border-color 0.22s;
   flex-shrink: 0;
 }
