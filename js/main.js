@@ -188,7 +188,7 @@ const relatedPlaylists = [
   {
     title: 'On Repeat',
     cover: 'other_playlist_covers/on_repeat.jpg',
-    href:  'https://onrepeat.vercel.app',
+    href:  'https://repeatedly.vercel.app',
   },
 ];
 
