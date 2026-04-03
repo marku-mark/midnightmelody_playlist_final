@@ -186,7 +186,7 @@ const playlistData = {
 ════════════════════════════════════════════════════════ */
 const relatedPlaylists = [
   {
-    title: 'On Repeat',
+    title: 'on repeat',
     cover: 'other_playlist_covers/on_repeat.jpg',
     href:  'https://repeatedly.vercel.app',
   },
