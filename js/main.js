@@ -186,9 +186,9 @@ const playlistData = {
 ════════════════════════════════════════════════════════ */
 const relatedPlaylists = [
   {
-    title: 'Midnight Drives',
+    title: 'On Repeat',
     cover: 'other_playlist_covers/on_repeat.jpg',
-    href:  'midnight-drives.html',
+    href:  'onrepeat.vercel.app',
   },
 ];
 
