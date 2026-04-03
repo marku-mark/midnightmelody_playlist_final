@@ -4,7 +4,8 @@
  * Sits between the Playlist data model and the UI renderer.
  */
 
-import { $ } from './modules/DOMHelpers.js';
+import { $ }              from './modules/DOMHelpers.js';
+import { SessionService } from './modules/SessionService.js';
 
 export class PlaylistController {
   /**
@@ -17,6 +18,9 @@ export class PlaylistController {
 
     // ── Audio engine ────────────────────────────────────
     this.audio = $('audioEngine');
+
+    // ── Session (persistence + media keys) ──────────────
+    this.session = new SessionService(this.audio);
 
     // ── Player state ────────────────────────────────────
     this.currentIndex = null;   // real index into playlist.songs
@@ -44,6 +48,26 @@ export class PlaylistController {
 
     this.playlist.buildShuffleOrder();
     this._render();
+
+    // ── Session persistence ──────────────────────────────
+    this.session.startPersisting(() => this.currentIndex);
+
+    // ── OS media controls (keyboard keys, lock screen, etc.) ──
+    this.session.registerMediaSession({
+      onPlay:   () => {
+        if (this.audio.src && this.audio.src !== window.location.href) {
+          this.audio.play().catch(() => {});
+          // isPlaying updated by native 'play' listener
+        }
+      },
+      onPause:  () => { this.audio.pause(); /* 'pause' listener handles state */ },
+      onNext:   () => this._goNext(),
+      onPrev:   () => this._goPrev(),
+      onSeekTo: (t) => { this.audio.currentTime = t; },
+    });
+
+    // ── Restore last session ─────────────────────────────
+    this._restoreSession();
   }
 
   /* ══════════════════════════════════════════════════════
@@ -88,24 +112,41 @@ export class PlaylistController {
   /**
    * Select and play a track by its real playlist index.
    * @param {number} index
+   * @param {number} [startTime=0] - seek to this position after load
+   * @param {boolean} [autoplay=true] - whether to start playing immediately
    */
-  _selectTrack(index) {
+  _selectTrack(index, startTime = 0, autoplay = true) {
     const song = this.playlist.songs[index];
 
     this.ui.highlightActiveRow(index);
     this.ui.showPlayerBar(song);
+    this.session.updateMediaMetadata(song);
 
     this.currentIndex = index;
 
     if (song.hasAudio) {
       this.audio.src = song.audio;
       this.audio.load();
-      this.audio.play()
-        .then(() => this._setPlaying(true))
-        .catch(e => {
-          console.warn('Autoplay blocked:', e.message);
-          this._setPlaying(false);
-        });
+
+      // Seek to restored position once metadata is available
+      if (startTime > 0) {
+        const onMeta = () => {
+          this.audio.currentTime = startTime;
+          this.audio.removeEventListener('loadedmetadata', onMeta);
+        };
+        this.audio.addEventListener('loadedmetadata', onMeta);
+      }
+
+      if (autoplay) {
+        this.audio.play()
+          .then(() => this._setPlaying(true))
+          .catch(e => {
+            console.warn('Autoplay blocked:', e.message);
+            this._setPlaying(false);
+          });
+      } else {
+        this._setPlaying(false);
+      }
     } else {
       this.audio.pause();
       this.audio.src = '';
@@ -160,6 +201,17 @@ export class PlaylistController {
       }
     });
 
+    // ── Sync UI whenever the browser pauses/plays for ANY reason ──
+    // This catches: OS media controls, YouTube stealing audio focus,
+    // phone call interruptions, headphone unplugging, etc.
+    audio.addEventListener('pause', () => {
+      if (this.isPlaying) this._setPlaying(false);
+    });
+
+    audio.addEventListener('play', () => {
+      if (!this.isPlaying) this._setPlaying(true);
+    });
+
     audio.addEventListener('ended', () => {
       this._setPlaying(false);
       ui.resetProgress();
@@ -194,11 +246,34 @@ export class PlaylistController {
       if (!audio.src || audio.src === window.location.href) return;
       if (this.isPlaying) {
         audio.pause();
-        this._setPlaying(false);
       } else {
-        audio.play().then(() => this._setPlaying(true));
+        audio.play();
       }
+      // Note: isPlaying state is updated by the pause/play listeners above
     });
+  }
+
+  /* ══════════════════════════════════════════════════════
+     PRIVATE: restore last session from localStorage
+  ══════════════════════════════════════════════════════ */
+
+  /**
+   * Reads saved session and restores the track + seek position.
+   * Autoplay is intentionally skipped — browsers block it without a user gesture.
+   * The player bar is shown in paused state so the user can resume with one click.
+   */
+  _restoreSession() {
+    const saved = this.session.restore();
+    if (!saved) return;
+
+    const { index, time, paused } = saved;
+    if (index < 0 || index >= this.playlist.songCount) return;
+
+    // Load the track in paused state at the saved position
+    this._selectTrack(index, time, false);
+
+    // Show a subtle toast so the user knows their session was restored
+    this.ui.showToast(`↩ Resumed: ${this.playlist.songs[index].name}`);
   }
 
   /* ══════════════════════════════════════════════════════
@@ -212,9 +287,10 @@ export class PlaylistController {
     ui.btnTransportPlay.addEventListener('click', () => {
       if (this.isPlaying) {
         this.audio.pause();
-        this._setPlaying(false);
+        // isPlaying updated by native 'pause' listener
       } else if (this.audio.src && this.audio.src !== window.location.href) {
-        this.audio.play().then(() => this._setPlaying(true)).catch(() => {});
+        this.audio.play().catch(() => {});
+        // isPlaying updated by native 'play' listener
       } else {
         this._selectTrack(0);
       }

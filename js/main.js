@@ -18,7 +18,7 @@ import { loadAllDurations }    from './modules/DataService.js';
    SECTION 1 — PLAYLIST DATA (edit here)
 ════════════════════════════════════════════════════════ */
 const playlistData = {
-  title:       'Forest Dusk Sessions',
+  title:       'the city of forks',
   creator:     'grace',
   creatorIcon: 'user_icon/icon.jpg',
   description: 'twilight nostalgia',
