@@ -823,7 +823,7 @@ body {
   z-index: 1;
   max-width: 980px;
   margin: 0 auto;
-  padding: 0 24px 0;
+  padding: 15px 14px 0;
 }
 
 .related-title {
@@ -903,7 +903,7 @@ body {
   gap: 20px;
   transition: transform 0.42s cubic-bezier(0.22,1,0.36,1);
   will-change: transform;
-  padding: 20px 20px 20px;
+  padding: 14px 14px 14px;
   /* Allow touch/mouse drag */
   cursor: grab;
   user-select: none;
@@ -990,9 +990,10 @@ body {
 /* ── Mobile responsive ─────────────────────────────── */
 @media (max-width: 680px) {
   .related-section {
-    padding: 0 14px 0;
+    padding: 15px 14px 0;
   }
-  .playlist-card { width: 128px; }
+  .playlist-card { width: 96px; }
+  .playlist-card-title-link { font-size: 11px; }
   .related-title { font-size: 15px; }
   .slider-arrow { width: 36px; height: 36px; }
 }
