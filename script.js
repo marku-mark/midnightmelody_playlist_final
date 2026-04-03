@@ -14,7 +14,6 @@ var playlist = {
     {
       name:     "Love U Like That",
       artist:   "Lauv",
-      duration: "3:31",
       color:    ["#8b9fe8", "#5b6fd4"],
       audio:    "songs/Love_U_Like_That-Lauv.m4a",
       image:    "previews/Love_U_Like_That-Lauv.jpg"
@@ -22,7 +21,6 @@ var playlist = {
     {
       name:     "Mean It",
       artist:   "Lauv, LANY",
-      duration: "3:52",
       color:    ["#f4b98e", "#e8834a"],
       audio:    "songs/Mean_It-Lauv_Lany.m4a",
       image:    "previews/Mean_It-Lauv_Lany.jpg"
@@ -30,7 +28,6 @@ var playlist = {
     {
       name:     "fuck, i'm lonely (feat. Anne-Marie)",
       artist:   "Lauv",
-      duration: "3:19",
       color:    ["#e8849e", "#c0607e"],
       audio:    "songs/Fuck_Im_Lonely_feat_Anne_marie-Lauv.m4a",
       image:    "previews/Fuck_Im_Lonely_feat_Anne_marie-Lauv.jpg"
@@ -38,7 +35,6 @@ var playlist = {
     {
       name:     "Superhero",
       artist:   "Lauv",
-      duration: "3:00",
       color:    ["#2d5a27", "#4a7c59"],
       audio:    "songs/Superhero-Lauv.m4a",
       image:    "previews/Superhero-Lauv.jpg"
@@ -46,7 +42,6 @@ var playlist = {
     {
       name:     "Paris in the Rain",
       artist:   "Lauv",
-      duration: "3:24",
       color:    ["#e8c87a", "#d4a853"],
       audio:    "songs/Paris_In_The_Rain-Lauv.m4a",
       image:    "previews/Paris_In_The_Rain-Lauv.jpg"
@@ -54,7 +49,6 @@ var playlist = {
     {
       name:     "Getting Over You",
       artist:   "Lauv",
-      duration: "4:15",
       color:    ["#5c6bc0", "#3949ab"],
       audio:    "songs/Getting_Over_You-Lauv.m4a",
       image:    "previews/Getting_Over_You-Lauv.jpg"
@@ -62,7 +56,6 @@ var playlist = {
     {
       name:     "Enemies",
       artist:   "Lauv",
-      duration: "3:14",
       color:    ["#81d4fa", "#0288d1"],
       audio:    "songs/Enemies-Lauv.m4a",
       image:    "previews/Enemies-Lauv.jpg"
@@ -70,7 +63,6 @@ var playlist = {
     {
       name:     "beat up car",
       artist:   "Henry Moodie",
-      duration: "3:34",
       color:    ["#8b9fe8", "#5b6fd4"],
       audio:    "songs/Beat_Up_Car-Henry_Moodie.m4a",
       image:    "previews/Beat_Up_Car-Henry_Moodie.jpg"
@@ -78,7 +70,6 @@ var playlist = {
     {
       name:     "good old days",
       artist:   "Henry Moodie",
-      duration: "2:36",
       color:    ["#f4b98e", "#e8834a"],
       audio:    "songs/Good_Old_Days-Henry_Moodie.m4a",
       image:    "previews/Good_Old_Days-Henry_Moodie.jpg"
@@ -86,7 +77,6 @@ var playlist = {
     {
       name:     "leave the lights on",
       artist:   "Johnny Orlando",
-      duration: "2:55",
       color:    ["#e8849e", "#c0607e"],
       audio:    "songs/Leave_The_Light_On-Johnny_Orlando.m4a",
       image:    "previews/Leave_The_Light_On-Johnny_Orlando.png"
@@ -94,7 +84,6 @@ var playlist = {
     {
       name:     "Vegas",
       artist:   "Johnny Orlando",
-      duration: "2:51",
       color:    ["#2d5a27", "#4a7c59"],
       audio:    "songs/Vegas-Johnny_Orlando.m4a",
       image:    "previews/Vegas-Johnny_Orlando.jpg"
@@ -102,7 +91,6 @@ var playlist = {
     {
       name:     "August",
       artist:   "Johnny Orlando",
-      duration: "3:10",
       color:    ["#e8c87a", "#d4a853"],
       audio:    "songs/August-Johnny_Orlando.m4a",
       image:    "previews/August-Johnny_Orlando.jpg"
@@ -110,7 +98,6 @@ var playlist = {
     {
       name:     "See You",
       artist:   "Johnny Orlando",
-      duration: "2:55",
       color:    ["#5c6bc0", "#3949ab"],
       audio:    "songs/See_You-Johnny_Orlando.m4a",
       image:    "previews/See_You-Johnny_Orlando.jpg"
@@ -118,7 +105,6 @@ var playlist = {
     {
       name:     "Paris",
       artist:   "The Chainsmokers",
-      duration: "3:41",
       color:    ["#81d4fa", "#0288d1"],
       audio:    "songs/Paris-The_Chainsmokers.m4a",
       image:    "previews/Paris-The_Chainsmokers.jpg"
@@ -126,7 +112,6 @@ var playlist = {
     {
       name:     "Save My Love",
       artist:   "Kygo, Khalid, Gryffin",
-      duration: "3:30",
       color:    ["#8b9fe8", "#5b6fd4"],
       audio:    "songs/Save_My_Love-Kygo_Khalid_Gryffin.m4a",
       image:    "previews/Save_My_Love-Kygo_Khalid_Gryffin.jpg"
@@ -134,7 +119,6 @@ var playlist = {
     {
       name:     "Silence (feat. Khalid)",
       artist:   "Marshmello",
-      duration: "3:00",
       color:    ["#f4b98e", "#e8834a"],
       audio:    "songs/Silence_feat_Khalid-Marshmello.m4a",
       image:    "previews/Silence_feat_Khalid-Marshmello.jpg"
@@ -142,7 +126,6 @@ var playlist = {
     {
       name:     "Beautiful People (feat. Khalid)",
       artist:   "Ed Sheeran",
-      duration: "3:17",
       color:    ["#e8849e", "#c0607e"],
       audio:    "songs/Beautiful_People_feat_Khalid-Ed_Sheeran.m4a",
       image:    "previews/Beautiful_People_feat_Khalid-Ed_Sheeran.jpg"
@@ -150,7 +133,6 @@ var playlist = {
     {
       name:     "Favorite Girl",
       artist:   "Justin Bieber",
-      duration: "4:16",
       color:    ["#2d5a27", "#4a7c59"],
       audio:    "songs/Favorite_Girl-Justin_Bieber.m4a",
       image:    "previews/Favorite_Girl-Justin_Bieber.jpg"
@@ -158,7 +140,6 @@ var playlist = {
     {
       name:     "so american",
       artist:   "Olivia Rodrigo",
-      duration: "2:49",
       color:    ["#e8c87a", "#d4a853"],
       audio:    "songs/So_American-Olivia_Rodrigo.m4a",
       image:    "previews/So_American-Olivia_Rodrigo.jpg"
@@ -166,7 +147,6 @@ var playlist = {
     {
       name:     "lowkey",
       artist:   "NIKI",
-      duration: "2:51",
       color:    ["#5c6bc0", "#3949ab"],
       audio:    "songs/Lowkey-Niki.m4a",
       image:    "previews/Lowkey-Niki.jpg"
@@ -267,7 +247,9 @@ function formatDurationHuman(totalSec) {
 
 /* Compute total seconds for an array of song objects */
 function computeTotalSeconds(songs) {
-  return songs.reduce(function (acc, s) { return acc + parseDuration(s.duration); }, 0);
+  return songs.reduce(function (acc, s) {
+    return acc + (s.realDuration || 0);
+  }, 0);
 }
 
 /* ════ SECTION 5 — STATE: search + sort ═════════════════ */
@@ -357,7 +339,7 @@ function renderTrackList() {
         '<div class="track-name">'   + highlight(song.name,   q) + "</div>" +
         '<div class="track-artist">' + highlight(song.artist, q) + "</div>" +
       "</div>" +
-      '<div class="track-duration" id="dur-' + realIndex + '">' + (song.duration || "\u2014") + "</div>";
+      '<div class="track-duration" id="dur-' + realIndex + '">\u2014</div>';
 
     /* Clicking a filtered/sorted row plays by real playlist index */
     row.addEventListener("click", (function (idx) {
@@ -501,8 +483,8 @@ function resetProgress() {
 function restoreDuration() {
   if (audio.duration && !isNaN(audio.duration) && audio.duration !== Infinity) {
     timeDuration.textContent = fmt(audio.duration);
-  } else if (currentIndex !== null && playlist.songs[currentIndex].duration) {
-    timeDuration.textContent = playlist.songs[currentIndex].duration;
+  } else if (currentIndex !== null && playlist.songs[currentIndex].realDuration) {
+    timeDuration.textContent = formatTotalDuration(playlist.songs[currentIndex].realDuration);
   }
 }
 
@@ -582,7 +564,7 @@ function selectTrack(index) {
     currentIndex = index;
     setPlaying(false);
     resetProgress();
-    if (song.duration) timeDuration.textContent = song.duration;
+    if (song.realDuration) timeDuration.textContent = formatTotalDuration(song.realDuration);
   }
 }
 
@@ -730,6 +712,60 @@ renderHeader();
 renderTrackList();
 initShareButton();
 buildShuffleOrder();
+
+/* ── Load real durations one-at-a-time via Promises ──────────
+   fetchDuration() wraps a single <audio> probe in a Promise that
+   resolves with the duration (or null on error), then immediately
+   aborts the connection. loadAllDurations() awaits each one in
+   sequence so only one request is ever active at a time.          */
+
+function fetchDuration(src) {
+  return new Promise(function (resolve) {
+    var probe = document.createElement("audio");
+    probe.preload = "metadata";
+
+    function done(secs) {
+      probe.removeEventListener("loadedmetadata", onMeta);
+      probe.removeEventListener("error", onError);
+      probe.src = "";
+      probe.load(); /* resets networkState → NETWORK_EMPTY (0) */
+      /* Confirm network is fully stopped */
+      if (probe.networkState !== HTMLMediaElement.NETWORK_EMPTY) {
+        console.warn("probe did not fully stop for:", src);
+      }
+      resolve(secs);
+    }
+
+    function onMeta() {
+      var secs = probe.duration;
+      done(!isNaN(secs) && secs !== Infinity ? secs : null);
+    }
+
+    function onError() { done(null); }
+
+    probe.addEventListener("loadedmetadata", onMeta);
+    probe.addEventListener("error", onError);
+    probe.src = src;
+    probe.load();
+  });
+}
+
+async function loadAllDurations() {
+  var songs = playlist.songs.filter(function (s) { return s.audio; });
+  for (var i = 0; i < songs.length; i++) {
+    var song = songs[i];
+    var idx  = playlist.songs.indexOf(song);
+    var secs = await fetchDuration(song.audio);
+    if (secs !== null) {
+      song.realDuration = secs;
+      var el = document.getElementById("dur-" + idx);
+      if (el) el.textContent = formatTotalDuration(secs);
+    }
+  }
+  renderFooter(); /* update total time once all durations are in */
+}
+
+loadAllDurations();
 
 /* Scroll fade — hide when at bottom */
 (function () {
