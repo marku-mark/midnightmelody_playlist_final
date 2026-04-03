@@ -12,8 +12,6 @@
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-md);
   padding: 16px 18px;
-  height: 1fr;
-  width: 1fr;
 }
 
 .badge {
