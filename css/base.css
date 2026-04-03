@@ -33,8 +33,8 @@
 
   /* Typography */
   --font-sf: -apple-system, 'SF Pro Display', 'SF Pro Text',
-             BlinkMacSystemFont, 'Helvetica Neue',
-             Helvetica, Arial, sans-serif;
+  BlinkMacSystemFont, 'Helvetica Neue',
+  Helvetica, Arial, sans-serif;
 }
 
 /* ── Reset ───────────────────────────────────────────── */
