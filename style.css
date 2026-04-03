@@ -903,7 +903,7 @@ body {
   gap: 20px;
   transition: transform 0.42s cubic-bezier(0.22,1,0.36,1);
   will-change: transform;
-  padding: 4px 2px 16px;
+  padding: 20px 20px 20px;
   /* Allow touch/mouse drag */
   cursor: grab;
   user-select: none;
