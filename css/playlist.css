@@ -245,3 +245,16 @@
 @media (min-width: 681px) and (max-width: 860px) {
   .playlist-title { font-size: 19px; }
 }
+
+@media (max-width: 680px) {
+  .track-list-scroll { max-height: calc(100vh - 260px); }
+  .track-thumb       { width: 36px; height: 36px; }
+  .track-name        { font-size: 13px; }
+  .playlist-title    { font-size: 18px; }
+
+  /* ADD THIS HERE */
+  .cover-grid {
+    max-width: 240px;
+    margin: 0 auto 14px;
+  }
+}

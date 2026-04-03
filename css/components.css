@@ -7,10 +7,6 @@
    COVER PHOTO
 ════════════════════════════════════════════════════════ */
 .cover-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  gap: 0;
   border-radius: var(--radius-md);
   overflow: hidden;
   aspect-ratio: 1;
