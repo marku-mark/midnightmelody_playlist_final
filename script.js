@@ -806,6 +806,8 @@ var relatedPlaylists = [
     /* Cover link */
     var coverLink = document.createElement("a");
     coverLink.href      = pl.href;
+    coverLink.target    = "_blank";
+    coverLink.rel       = "noopener noreferrer";
     coverLink.className = "playlist-card-link";
     coverLink.setAttribute("aria-label", pl.title);
 
@@ -827,6 +829,8 @@ var relatedPlaylists = [
     /* Title link */
     var titleLink = document.createElement("a");
     titleLink.href      = pl.href;
+    titleLink.target    = "_blank";
+    titleLink.rel       = "noopener noreferrer";
     titleLink.className = "playlist-card-title-link";
     titleLink.textContent = pl.title;
 
