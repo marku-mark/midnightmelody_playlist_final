@@ -71,7 +71,7 @@
 
 /* ── Playlist description ─────────────────────────────── */
 .playlist-description {
-  margin-top: 1px;
+  margin-top: 3px;
   padding-top: 1px;
   border-top: 1px solid rgba(255,255,255,0.10);
 }
