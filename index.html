@@ -4,9 +4,19 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Forest Dusk Sessions - Playlist</title>
-  <link rel="icon" href="favicon/totoro_icon.png">
-  <link href="https://fonts.googleapis.com/css2?family=Cedarville+Cursive&family=Fraunces:wght@300;500;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="favicon/totoro_icon.png" />
+
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cedarville+Cursive&family=Fraunces:wght@300;500;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Modular CSS -->
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/playlist.css" />
 </head>
 <body>
 
@@ -19,7 +29,7 @@
 
   <div class="page">
 
-    <!-- ══ LEFT / TOP PANEL ══════════════════════════ -->
+    <!-- ══ LEFT / TOP PANEL ══════════════════════════════ -->
     <aside class="panel-left">
 
       <!-- On mobile: cover + header sit side by side -->
@@ -45,8 +55,9 @@
 
       </div><!-- /mobile-top -->
 
-      <!-- Transport controls: Shuffle / Play / Repeat -->
+      <!-- Transport controls: Back / Shuffle / Play / Repeat / Next -->
       <div class="transport-bar">
+
         <div class="transport-btn-wrap">
           <button class="btn-transport" id="btnTransportBack" aria-label="Previous" title="Previous track">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -95,7 +106,8 @@
           </button>
           <span class="transport-label">Next</span>
         </div>
-      </div>
+
+      </div><!-- /transport-bar -->
 
       <!-- Audio player bar (hidden until a track is clicked) -->
       <div class="player-bar" id="playerBar">
@@ -115,12 +127,12 @@
         <button class="btn-play" id="btnPlay" aria-label="Play">&#9654;</button>
       </div>
 
-    </aside>
+    </aside><!-- /panel-left -->
 
-    <!-- ══ RIGHT / BOTTOM PANEL: full track list ═════ -->
+    <!-- ══ RIGHT / BOTTOM PANEL: full track list ═══════ -->
     <main class="panel-right">
 
-      <!-- ══ SEARCH + SORT TOOLBAR ═══════════════════ -->
+      <!-- Search + Sort toolbar -->
       <div class="toolbar">
         <div class="search-wrap">
           <svg class="search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -164,26 +176,23 @@
 
       <div class="divider"></div>
 
-      <!-- Scrollable track list container -->
+      <!-- Scrollable track list -->
       <div class="track-list-scroll" id="trackListScroll">
-        <!-- Track rows built by JS -->
         <div class="track-list" id="trackList"></div>
 
-        <!-- Empty state -->
         <div class="empty-state" id="emptyState">
           <span>🎵</span>
           <p>No songs match your search</p>
         </div>
 
-        <!-- "Showing X of Y songs" -->
         <div class="total-info" id="totalInfo"></div>
       </div>
 
-    </main>
+    </main><!-- /panel-right -->
 
   </div><!-- /page -->
 
-  <!-- ══ RELATED PLAYLISTS SLIDER ════════════════════ -->
+  <!-- ══ RELATED PLAYLISTS SLIDER ═══════════════════════ -->
   <section class="related-section" id="relatedSection">
     <h2 class="related-title">More Playlists</h2>
     <div class="slider-row">
@@ -203,7 +212,7 @@
     </div>
   </section>
 
-  <!-- ══ PAGE FOOTER — Share button + branding ═════ -->
+  <!-- ══ PAGE FOOTER ════════════════════════════════════ -->
   <footer class="page-footer">
     <div class="footer-divider"></div>
     <button class="btn-share" id="shareBtn">
@@ -218,6 +227,8 @@
   <!-- Toast notification -->
   <div class="toast" id="toast"></div>
 
-  <script src="script.js"></script>
+  <!-- ES module entry point — no inline scripts -->
+  <script type="module" src="js/main.js"></script>
+
 </body>
 </html>

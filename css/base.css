@@ -1,0 +1,101 @@
+/* ════════════════════════════════════════════════════════
+   base.css — Design tokens, resets, fonts, body
+════════════════════════════════════════════════════════ */
+
+/* ── Design tokens ───────────────────────────────────── */
+:root {
+  /* Core palette — photo-matched sage theme */
+  --forest:      #5f7158;
+  --moss:        #7B8D73;
+  --sage:        #8f9f86;
+  --sage-light:  #aab8a1;
+  --sage-dark:   #4e5e48;
+
+  /* Accent tones */
+  --peach:   #e7c7a8;
+  --orange:  #c99b6f;
+  --pink:    #d5a2ad;
+
+  /* Glass UI */
+  --glass-bg:     rgba(255,255,255,0.08);
+  --glass-border: rgba(255,255,255,0.18);
+  --glass-shadow: rgba(40,55,40,0.28);
+
+  /* Text colors */
+  --text-main:  rgba(255,255,255,0.92);
+  --text-sub:   rgba(255,255,255,0.60);
+  --text-muted: rgba(255,255,255,0.38);
+
+  /* Border radii */
+  --radius-lg: 26px;
+  --radius-md: 16px;
+  --radius-sm: 10px;
+
+  /* Typography */
+  --font-sf: -apple-system, 'SF Pro Display', 'SF Pro Text',
+             BlinkMacSystemFont, 'Helvetica Neue',
+             Helvetica, Arial, sans-serif;
+}
+
+/* ── Reset ───────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html { height: 100%; }
+
+/* ── Body / page background ──────────────────────────── */
+body {
+  font-family: var(--font-sf);
+  min-height: 100vh;
+  overflow-x: hidden;
+  background:
+    radial-gradient(ellipse 80% 60% at 10% 15%, rgba(123,141,115,0.55) 0%, transparent 60%),
+    radial-gradient(ellipse 65% 55% at 88% 80%, rgba(95,113,88,0.45) 0%, transparent 55%),
+    radial-gradient(ellipse 55% 50% at 55% 5%,  rgba(170,184,161,0.30) 0%, transparent 55%),
+    linear-gradient(155deg, #7B8D73 0%, #6d7f66 35%, #5f7158 70%, #55654f 100%);
+}
+
+/* ── Ambient blobs ───────────────────────────────────── */
+.ambient {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.30;
+  animation: drift 14s ease-in-out infinite alternate;
+}
+
+.blob-1 { width: 500px; height: 500px; top: -15%; left: -12%; background: var(--moss);       animation-duration: 16s; }
+.blob-2 { width: 380px; height: 380px; top: 45%;  right: -10%; background: var(--sage-dark); animation-duration: 12s; animation-delay: -5s; }
+.blob-3 { width: 300px; height: 300px; bottom: 0;  left: 32%;  background: var(--sage);      animation-duration: 18s; animation-delay: -9s; }
+
+@keyframes drift {
+  from { transform: translate(0,0) scale(1); }
+  to   { transform: translate(28px,18px) scale(1.07); }
+}
+
+/* ── Shared animation ────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(32px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes trackSlide {
+  from { opacity: 0; transform: translateX(-14px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}

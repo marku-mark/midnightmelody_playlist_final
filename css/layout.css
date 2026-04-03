@@ -1,0 +1,128 @@
+/* ════════════════════════════════════════════════════════
+   layout.css — Page structure, grid, flex, responsive
+════════════════════════════════════════════════════════ */
+
+/* ── Main page wrapper ───────────────────────────────── */
+.page {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 20px;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 36px 24px 0;
+  min-height: calc(100vh - 80px);
+}
+
+/* ── Left panel (sticky sidebar) ────────────────────── */
+.panel-left {
+  width: 320px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  animation: fadeUp 0.7s cubic-bezier(0.22,1,0.36,1) both;
+}
+
+/* On desktop: cover + header stacked vertically */
+.mobile-top {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* ── Right panel (scrollable track list) ─────────────── */
+.panel-right {
+  flex: 1;
+  min-width: 0;
+  background: var(--glass-bg);
+  backdrop-filter: blur(24px) saturate(1.5);
+  -webkit-backdrop-filter: blur(24px) saturate(1.5);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 8px 40px var(--glass-shadow);
+  padding: 20px;
+  animation: fadeUp 0.7s cubic-bezier(0.22,1,0.36,1) 0.1s both;
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100vh - 120px);
+  min-height: 320px;
+}
+
+/* ── Related playlists section ───────────────────────── */
+.related-section {
+  position: relative;
+  z-index: 1;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 15px 14px 0;
+}
+
+/* ── Page footer ─────────────────────────────────────── */
+.page-footer {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 28px 24px 32px;
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.footer-divider {
+  display: none;
+}
+
+/* ════════════════════════════════════════════════════════
+   RESPONSIVE — MOBILE (≤ 680px)
+════════════════════════════════════════════════════════ */
+@media (max-width: 680px) {
+  .page {
+    flex-direction: column;
+    padding: 20px 14px 0;
+    gap: 16px;
+    min-height: unset;
+    max-height: none;
+    height: 100%;
+  }
+
+  .panel-left {
+    width: 100%;
+    position: static;
+    gap: 14px;
+  }
+
+  .mobile-top {
+    display: flex;
+    flex-direction: row;
+    gap: 14px;
+    align-items: flex-start;
+  }
+
+  .panel-right {
+    width: 100%;
+    max-height: none;
+    min-height: auto;
+    flex: 1;
+    padding: 16px 12px;
+  }
+
+  .page-footer {
+    padding: 20px 14px 24px;
+  }
+
+  .related-section {
+    padding: 15px 14px 0;
+  }
+}
+
+/* ── Tablet (681px – 860px) ─────────────────────────── */
+@media (min-width: 681px) and (max-width: 860px) {
+  .panel-left { width: 260px; }
+}
