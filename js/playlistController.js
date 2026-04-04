@@ -7,6 +7,33 @@
 import { $ }              from './modules/DOMHelpers.js';
 import { SessionService } from './modules/SessionService.js';
 
+/* ── UI state persistence ───────────────────────────────────
+   Saves search query, sort key, and sort direction to localStorage.
+   Restored on page load; falls back to defaults when absent.
+   Key: fds_ui_state
+   Schema: { searchQuery, sortKey, sortDir }
+──────────────────────────────────────────────────────────── */
+const UI_STATE_KEY = 'fds_ui_state';
+
+function loadUIState() {
+  try {
+    const raw = localStorage.getItem(UI_STATE_KEY);
+    return raw ? JSON.parse(raw) : null;
+  } catch {
+    return null;
+  }
+}
+
+function saveUIState(state) {
+  try {
+    localStorage.setItem(UI_STATE_KEY, JSON.stringify(state));
+  } catch { /* fail silently */ }
+}
+
+function clearUIState() {
+  localStorage.removeItem(UI_STATE_KEY);
+}
+
 export class PlaylistController {
   /**
    * @param {import('./modules/Playlist.js').Playlist} playlist
@@ -33,6 +60,12 @@ export class PlaylistController {
     this.searchQuery = '';
     this.sortKey     = null;    // null | 'title' | 'artist'
     this.sortDir     = 'asc';  // 'asc' | 'desc'
+
+    // ── Active queue ─────────────────────────────────────
+    // Always mirrors the currently visible (filtered + sorted) song list.
+    // Navigation (next/prev/auto-advance) walks this array, not the master
+    // playlist, so what you see is exactly what plays in order.
+    this.activeQueue = [];  // Song[]
   }
 
   /** Wire up all event listeners and do the initial render. */
@@ -47,6 +80,9 @@ export class PlaylistController {
     this.ui.initScrollFade();
 
     this.playlist.buildShuffleOrder();
+
+    // Restore saved search/sort state before first render
+    this._restoreUIState();
     this._render();
 
     // ── Session persistence ──────────────────────────────
@@ -96,7 +132,12 @@ export class PlaylistController {
 
   _render() {
     const visible = this.playlist.getVisibleSongs(this.searchQuery, this.sortKey, this.sortDir);
-    this.ui.renderTrackList(visible, this.playlist, this.searchQuery, idx => this._selectTrack(idx));
+
+    // Keep activeQueue in sync with exactly what's on screen.
+    // All navigation (next/prev/auto-advance/shuffle) reads from this.
+    this.activeQueue = visible;
+
+    this.ui.renderTrackList(visible, this.playlist, this.searchQuery, idx => this._selectTrack(idx), this.currentIndex);
     this._renderFooter();
   }
 
@@ -163,25 +204,62 @@ export class PlaylistController {
     this.ui.setPlayingState(playing);
   }
 
+  /**
+   * Real playlist index of the next song to play.
+   * Wraps around to the first queue track at the end.
+   * Respects the active queue (filtered/sorted view) and shuffle mode.
+   */
   _nextTrackIndex() {
     if (this.shuffleMode) return this.playlist.nextShuffleIndex(this.currentIndex);
-    return (this.currentIndex + 1) % this.playlist.songCount;
+
+    if (!this.activeQueue.length) return null;
+    const pos = this.activeQueue.findIndex(s => this.playlist.indexOf(s) === this.currentIndex);
+    if (pos === -1) {
+      // Current track filtered out — jump to queue start
+      return this.playlist.indexOf(this.activeQueue[0]);
+    }
+    // Wrap: last track → first track
+    const next = (pos + 1) % this.activeQueue.length;
+    return this.playlist.indexOf(this.activeQueue[next]);
   }
 
+  /**
+   * Real playlist index of the previous song to play.
+   * Wraps around to the last queue track at the start.
+   * Respects the active queue (filtered/sorted view) and shuffle mode.
+   */
   _prevTrackIndex() {
     if (this.shuffleMode) return this.playlist.prevShuffleIndex(this.currentIndex);
-    return (this.currentIndex - 1 + this.playlist.songCount) % this.playlist.songCount;
+
+    if (!this.activeQueue.length) return null;
+    const pos = this.activeQueue.findIndex(s => this.playlist.indexOf(s) === this.currentIndex);
+    if (pos === -1) {
+      return this.playlist.indexOf(this.activeQueue[0]);
+    }
+    // Wrap: first track → last track
+    const prev = (pos - 1 + this.activeQueue.length) % this.activeQueue.length;
+    return this.playlist.indexOf(this.activeQueue[prev]);
   }
 
   _goNext() {
-    if (this.currentIndex === null) { this._selectTrack(0); return; }
-    this._selectTrack(this._nextTrackIndex());
+    if (this.currentIndex === null) {
+      const first = this.activeQueue[0];
+      if (first) this._selectTrack(this.playlist.indexOf(first));
+      return;
+    }
+    const next = this._nextTrackIndex();
+    if (next !== null) this._selectTrack(next);
   }
 
   _goPrev() {
-    if (this.currentIndex === null) { this._selectTrack(0); return; }
+    if (this.currentIndex === null) {
+      const first = this.activeQueue[0];
+      if (first) this._selectTrack(this.playlist.indexOf(first));
+      return;
+    }
     if (this.audio.currentTime > 3) { this.audio.currentTime = 0; return; }
-    this._selectTrack(this._prevTrackIndex());
+    const prev = this._prevTrackIndex();
+    if (prev !== null) this._selectTrack(prev);
   }
 
   /* ══════════════════════════════════════════════════════
@@ -224,14 +302,21 @@ export class PlaylistController {
           .catch(() => {});
 
       } else if (this.repeatMode === 'all') {
-        this._selectTrack(this._nextTrackIndex());
+        // Wraps automatically via _nextTrackIndex()
+        const next = this._nextTrackIndex();
+        if (next !== null) this._selectTrack(next);
 
       } else {
-        // repeatMode === false: advance unless we're at the end of a linear list
+        // No repeat — auto-advance only if there is a next track in the queue.
+        // At the last track, _nextTrackIndex() wraps back to index 0 of the queue,
+        // which would be less than currentIndex — so we stop there instead of looping.
         const next = this._nextTrackIndex();
-        if (next !== null && (this.shuffleMode || next > this.currentIndex)) {
-          this._selectTrack(next);
-        }
+        const nextPos = next !== null
+          ? this.activeQueue.findIndex(s => this.playlist.indexOf(s) === next)
+          : -1;
+        const curPos = this.activeQueue.findIndex(s => this.playlist.indexOf(s) === this.currentIndex);
+        if (next !== null && nextPos > curPos) this._selectTrack(next);
+        // else: last track finished, stay stopped
       }
     });
 
@@ -251,6 +336,36 @@ export class PlaylistController {
       }
       // Note: isPlaying state is updated by the pause/play listeners above
     });
+  }
+
+  /* ══════════════════════════════════════════════════════
+     PRIVATE: restore UI state (search + sort) from localStorage
+  ══════════════════════════════════════════════════════ */
+
+  /**
+   * Reads any previously saved search/sort state and applies it to
+   * the controller properties AND the visible UI controls.
+   * Falls back to clean defaults when no saved state exists.
+   */
+  _restoreUIState() {
+    const saved = loadUIState();
+    if (!saved) return;
+
+    // Restore search query
+    if (saved.searchQuery) {
+      this.searchQuery = saved.searchQuery;
+      if (this.ui.searchInput) {
+        this.ui.searchInput.value = saved.searchQuery;
+        this.ui.setClearButtonVisible(true);
+      }
+    }
+
+    // Restore sort
+    if (saved.sortKey) {
+      this.sortKey = saved.sortKey;
+      this.sortDir = saved.sortDir ?? 'asc';
+      this.ui.updateSortButtons(this.sortKey, this.sortDir);
+    }
   }
 
   /* ══════════════════════════════════════════════════════
@@ -292,7 +407,9 @@ export class PlaylistController {
         this.audio.play().catch(() => {});
         // isPlaying updated by native 'play' listener
       } else {
-        this._selectTrack(0);
+        // Nothing loaded yet — start from the first visible track
+        const first = this.activeQueue[0];
+        if (first) this._selectTrack(this.playlist.indexOf(first));
       }
     });
 
@@ -329,6 +446,7 @@ export class PlaylistController {
     ui.searchInput.addEventListener('input', () => {
       this.searchQuery = ui.searchInput.value;
       ui.setClearButtonVisible(this.searchQuery.length > 0);
+      saveUIState({ searchQuery: this.searchQuery, sortKey: this.sortKey, sortDir: this.sortDir });
       this._render();
     });
 
@@ -337,6 +455,7 @@ export class PlaylistController {
       this.searchQuery     = '';
       ui.setClearButtonVisible(false);
       ui.searchInput.focus();
+      saveUIState({ searchQuery: '', sortKey: this.sortKey, sortDir: this.sortDir });
       this._render();
     });
   }
@@ -359,6 +478,7 @@ export class PlaylistController {
         }
 
         ui.updateSortButtons(this.sortKey, this.sortDir);
+        saveUIState({ searchQuery: this.searchQuery, sortKey: this.sortKey, sortDir: this.sortDir });
         this._render();
 
         const label    = key === 'title' ? '🔤 Title' : '🎤 Artist';

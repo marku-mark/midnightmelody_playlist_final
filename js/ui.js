@@ -97,8 +97,9 @@ export class UI {
    * @param {import('./modules/Playlist.js').Playlist} playlist - full playlist (for real indices)
    * @param {string} query - current search query for highlight
    * @param {function(realIndex: number): void} onTrackClick - click handler
+   * @param {number|null} activeIndex - real index of the currently-playing track (to re-highlight)
    */
-  renderTrackList(visibleSongs, playlist, query, onTrackClick) {
+  renderTrackList(visibleSongs, playlist, query, onTrackClick, activeIndex = null) {
     const q = query.trim().toLowerCase();
 
     // Use a fragment for a single DOM write
@@ -110,6 +111,9 @@ export class UI {
       row.className  = 'track-row';
       row.style.animationDelay = `${0.05 + i * 0.04}s`;
       row.dataset.realIndex    = realIdx;
+
+      // Re-apply playing highlight immediately — no second pass needed
+      if (realIdx === activeIndex) row.classList.add('is-playing');
 
       const thumbInner = song.hasImage
         ? `<img src="${escHtml(song.image)}" alt="${escHtml(song.name)}" />`
@@ -137,6 +141,13 @@ export class UI {
 
     this.trackList.innerHTML = '';
     this.trackList.appendChild(fragment);
+
+    // ── Re-apply any already-loaded durations ────────────
+    visibleSongs.forEach(song => {
+      if (song.realDuration != null) {
+        this.updateDurationCell(playlist.indexOf(song), song.realDuration);
+      }
+    });
 
     toggleClass(this.emptyState, 'visible', visibleSongs.length === 0);
   }

@@ -96,19 +96,69 @@ export function fetchDuration(src) {
   });
 }
 
+/* ════════════════════════════════════════════════════════
+   DURATION CACHE  (localStorage)
+   Key: fds_durations
+   Value: { [audioSrc]: seconds }
+════════════════════════════════════════════════════════ */
+
+const DURATION_CACHE_KEY = 'fds_durations';
+
+/**
+ * Load the duration cache from localStorage.
+ * @returns {Record<string, number>}
+ */
+export function loadDurationCache() {
+  try {
+    const raw = localStorage.getItem(DURATION_CACHE_KEY);
+    return raw ? JSON.parse(raw) : {};
+  } catch {
+    return {};
+  }
+}
+
+/**
+ * Persist a single src→seconds entry into the cache.
+ * @param {string} src
+ * @param {number} seconds
+ */
+export function saveDurationToCache(src, seconds) {
+  try {
+    const cache = loadDurationCache();
+    cache[src] = seconds;
+    localStorage.setItem(DURATION_CACHE_KEY, JSON.stringify(cache));
+  } catch {
+    // Quota exceeded or private browsing — fail silently
+  }
+}
+
 /**
  * Load real durations for all songs that have audio, sequentially.
+ * Checks the localStorage cache first; only fetches from the network
+ * when a duration is not yet cached.
  * Updates song.realDuration in place, then calls onUpdate after each.
  *
  * @param {import('../modules/Song.js').Song[]} songs
- * @param {function(song: Song, index: number): void} onUpdate - called after each duration resolves
+ * @param {function(song: Song): void} onUpdate - called after each duration resolves
  */
 export async function loadAllDurations(songs, onUpdate) {
+  const cache = loadDurationCache();
+
   for (const song of songs) {
     if (!song.hasAudio) continue;
+
+    // ── Cache hit: no network request needed ────────────
+    if (cache[song.audio] !== undefined) {
+      song.realDuration = cache[song.audio];
+      onUpdate(song);
+      continue;
+    }
+
+    // ── Cache miss: probe the file ───────────────────────
     const secs = await fetchDuration(song.audio);
     if (secs !== null) {
       song.realDuration = secs;
+      saveDurationToCache(song.audio, secs);
       onUpdate(song);
     }
   }
