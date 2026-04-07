@@ -48,7 +48,14 @@ export class Playlist {
       result = result.slice().sort((a, b) => {
         const va = (sortKey === 'title' ? a.name : a.artist).toLowerCase();
         const vb = (sortKey === 'title' ? b.name : b.artist).toLowerCase();
-        return va < vb ? -dir : va > vb ? dir : 0;
+        if (va !== vb) return va < vb ? -dir : dir;
+        // Tiebreaker: when artists are equal, sort by song name
+        if (sortKey === 'artist') {
+          const na = a.name.toLowerCase();
+          const nb = b.name.toLowerCase();
+          return na < nb ? -dir : na > nb ? dir : 0;
+        }
+        return 0;
       });
     }
 
